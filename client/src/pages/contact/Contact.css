@@ -1,0 +1,110 @@
+.contact-info {
+  padding: 3%;
+  margin-top: 3rem;
+  font-size: 1.5rem;
+}
+.contact-info h2 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+.contact-info p {
+  color: var(--text-color);
+  line-height: 1.8;
+  text-transform: none;
+}
+.contact-info h5 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.contact-info i {
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+}
+.conatac-info-list {
+  margin: 4rem 0;
+  display: flex;
+  align-items: center;
+}
+.contact-info-item {
+  flex: 0 0 33.3333%;
+}
+.contact-map-form {
+  margin: 0 3% 10rem 3%;
+  display: flex;
+  border: 1px solid rgba(0 0 0 / 0.1);
+  border-radius: 1rem;
+}
+.contact-form {
+  font-size: 1.5rem;
+  flex: 0 0 50%;
+  padding: 3rem 8rem;
+}
+.contact-form-heading h2 {
+  font-size: 3.5rem;
+}
+.contact-form-heading p {
+  color: var(--text-color);
+  padding-bottom: 4rem;
+}
+.contact-map iframe{
+    height: 100%;
+}
+.contact-form input,
+.contact-form textarea {
+    color: var(--text-color);
+  border: 1px solid rgba(0 0 0 / 0.1);
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+.contact-form textarea {
+  height: 10rem;
+}
+
+@media screen and (max-width:1024px) {
+  .contact-map-form{
+    flex-direction: column;
+    padding: 3rem;
+  }
+  .contact-map iframe{
+    height: 50rem;
+    width: 100%;
+}
+}
+@media screen and (max-width:414px) {
+  .conatac-info-list{
+    flex-direction: column;
+    text-align: center;
+  }
+  .contact-info{
+    text-align: center;
+  }
+  .contact-info h2{
+    font-size: 3rem;
+  }
+  .contact-info i{
+    margin: 4rem 0 1rem 0;
+  }
+  .contact-map iframe{
+    height: 30vh;
+  }
+  .contact-form{
+    padding: 2rem 0;
+    text-align: center;
+  }
+  .contact-form-heading h2{
+    font-size: 3rem;
+  }
+  .contact-map-form{
+    padding: 0;
+    border: none;
+  }
+  .contact-form-heading p{
+    font-size: 1.4rem;
+    padding-bottom:2rem;
+  }
+}

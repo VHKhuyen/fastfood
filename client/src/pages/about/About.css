@@ -1,0 +1,135 @@
+.about-item-content {
+  padding-right: 5%;
+  flex: 0 0 45%;
+}
+.about-item-content h1 {
+  font-size: 5rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+.about-item-content h1 span {
+  font-family: var(--norican-font);
+  display: block;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+.about-item-content p {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin: 2rem 0 2.5rem 0;
+  line-height: 1.8;
+}
+.about-item {
+  display: flex;
+  align-items: center;
+}
+.about-item-image {
+  flex-basis: 55%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.about-item-image .top img {
+  border-radius: 1rem;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-item-image .image {
+  width: 100%;
+}
+
+.about-item-image > .top {
+  display: flex;
+  gap: 2rem;
+  max-height: 28rem;
+}
+.about-item-image > .bottom {
+  max-height: 28rem;
+  display: flex;
+}
+
+.about-item-image > .bottom img {
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.about-item-content h2 {
+  font-size: 3.5rem;
+}
+.about-info {
+  flex-direction: row-reverse;
+}
+.about-info .about-item-content {
+  padding: 0 0 0 5%;
+}
+.about-info .about-item-image {
+  justify-content: center;
+}
+.about-item:not(:first-child) {
+  margin-top: 10rem;
+}
+.about-item-content h2 span {
+  font-family: var(--norican-font);
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+.about-banner {
+  height: 54rem;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.about-banner-content h1 {
+  font-size: 5.5rem;
+  margin-bottom: 1rem;
+}
+.about-banner-content p {
+  color: var(--text-color);
+  font-size: 1.4rem;
+  line-height: 1.8;
+}
+.about-banner-content button {
+  margin-top: 3rem;
+}
+.about-banner-content span {
+  display: block;
+  font-size: 3.5rem;
+  font-family: var(--norican-font);
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1024px) {
+  .about-item {
+    margin-bottom: 5rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .about-item-content h1 {
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width: 444px) {
+  .about-item {
+    display: block;
+    text-align: center;
+  }
+  .about-item-content {
+    padding-right: 0;
+  }
+  .about-item-image {
+    display: none;
+  }
+  .about-item-content h1 {
+    font-size: 3rem;
+  }
+}

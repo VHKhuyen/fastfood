@@ -1,0 +1,29 @@
+.home-category {
+  max-width: 171rem;
+  margin: 3rem auto;
+}
+.home-category-list {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.home-category-item {
+  margin: 1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.home-category-item:hover {
+  color: var(--primary-color);
+}
+
+@media screen and (max-width: 768px) {
+  .home-category-item {
+    width: 25%;
+  }
+}

@@ -1,0 +1,47 @@
+.info-header{
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    color: var(--white-color);
+}
+.info-header .container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+}
+
+.info-header-left {
+    display: flex;
+}
+
+.info-header-left div{
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+}
+.info-header-left .address{
+    padding: 0 2rem;
+}
+
+.info-header-left i{
+    margin-right: 1.6rem;
+}
+.info-header-right i{
+    cursor: pointer;
+    font-size: 1.8rem;
+    margin: 0 1.5rem;
+}
+
+.info-header-right i:hover{
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+@media screen and (max-width:768px) {
+    .info-header{
+        display: none;
+    }
+}

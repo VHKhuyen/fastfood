@@ -1,0 +1,133 @@
+.home-first-container {
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.home-first {
+  max-width: 171rem;
+  margin: 0 auto;
+  padding: 5rem 3rem;
+  display: flex;
+  align-items: center;
+}
+.home-first-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.home-first-content h1 {
+  text-transform: uppercase;
+  color: #000;
+  line-height: 1;
+  font-size: 8rem;
+}
+.home-first-content span {
+  text-transform: uppercase;
+  color: var(--primary-color);
+  display: block;
+}
+.home-first-image {
+  width: 50%;
+}
+.home-first p {
+  margin: 1rem;
+  font-size: 3rem;
+  color: var(--second-color);
+  font-weight: 600;
+}
+.home-pasta {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+.home-pasta .container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+}
+.home-pasta-left {
+  justify-self: left;
+  width: 50%;
+  display: flex;
+}
+.home-pasta-left .image {
+  width: 25rem;
+  margin: 0 auto;
+  position: relative;
+}
+.home-pasta-left .content {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+}
+.home-pasta-left h5 {
+  font-size: 2rem;
+  font-family: var(--norican-font);
+}
+.home-pasta-left h2 {
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+.home-pasta-left span {
+  color: var(--heading-color);
+}
+.home-pasta-right > div {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1rem 1rem rgba(0, 0, 0, 0.3);
+}
+.home-pasta-right h5 {
+  font-size: 4.5rem;
+  font-family: var(--norican-font);
+  color: var(--white-color);
+}
+
+.home-pasta-right h2 {
+  font-size: 15rem;
+  line-height: 1;
+  color: var(--primary-color);
+}
+
+@media screen and (max-width: 1024px) {
+  .home-pasta-right h2 {
+    font-size: 12rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .home-first {
+    flex-direction: column;
+  }
+  .home-first-content {
+    text-align: center;
+    margin-bottom: 5rem;
+    width: 100%;
+  }
+  .home-first-image{
+      width: 100%;
+  }
+  .home-first p {
+    font-size: 2rem;
+  }
+  .home-first h1 {
+    font-size: 5rem;
+  }
+  .home-pasta .container {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+  .home-pasta-right h2 {
+    font-size: 8rem;
+  }
+  .home-pasta-right h5 {
+    font-size: 3.5rem;
+  }
+  .home-pasta-left .image {
+    width: 22rem;
+  }
+}
+@media screen and (max-width: 414px) {
+}
