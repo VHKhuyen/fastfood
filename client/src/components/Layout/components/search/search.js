@@ -6,6 +6,7 @@ import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-ic
 import HeadlessTippy from '@tippyjs/react/headless'
 import { Wrapper as PopperWrapper } from '@/components/popper'
 import SearchProduct from '@/components/SearchProduct'
+import { useEffect } from 'react/cjs/react.development'
 const cx = classNames.bind(style)
 
 function Search() {
@@ -24,6 +25,11 @@ function Search() {
 		setShowResult(false)
 	}
 
+	useEffect(() => {
+		setTimeout(() => {
+			setSearchResult([1, 2, 3])
+		}, 0)
+	}, [searchValue])
 	return (
 		<HeadlessTippy
 			visible={showResult && searchResult.length > 0}

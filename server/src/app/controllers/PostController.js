@@ -12,7 +12,7 @@ class PostController {
     }
 
     async create(req, res) {
-        const { title, description, author, userId, image, category } = req.body
+        const { title, description, image, category } = req.body
 
         //Simple validation
         if (!title) {
@@ -30,7 +30,7 @@ class PostController {
     }
 
     async update(req, res) {
-        const { title, description, author, userId, image, category } = req.body
+        const { title, description, image, category } = req.body
 
         //Simple validation
         if (!title) {

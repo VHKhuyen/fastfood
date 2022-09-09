@@ -1,8 +1,7 @@
-GET http://localhost:5000/posts
-
+GET http://localhost:5000/api/posts
 ###
 
-POST http://localhost:5000/auth/register
+POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
@@ -11,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5000/auth/login
+POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
@@ -19,7 +18,7 @@ Content-Type: application/json
     "password": "vhkhuyen"
 }
 ###
-POST http://localhost:5000/posts/create
+POST http://localhost:5000/api/posts/create
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc5ZGE1ZmRlMmEwMDRlNTJlYmZlMDQiLCJ1c2VybmFtZSI6InZoa2h1eWVuMiIsImlhdCI6MTY1MjE1MjkzNn0.xtMSfpvBf-hUv86RwLY3HHQnPNnqf5GCaN8C2VC8hT8
 
@@ -29,19 +28,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc5Z
     "image":"https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/16-1.png",
     "category": "Foodee"
 }
-###
-
-PUT  http://localhost:5000/posts/6266c91839b7d89879b0fed4
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjY1N2YxYTMzMDJjYjNlM2I0M2Y3MjgiLCJ1c2VybmFtZSI6InZoa2h1eWVuMSIsImlhdCI6MTY1MDkwMzEzN30.HcRdka3E1wY4mAhLaoMEMrOlsapj_WVDcCetB2WERXA
-
-
-{
-    "title": "Sushiiii",  
-    "description": "Minh Anh cute phomaique",
-    "image":"https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/16-1.png",
-    "category": "Foodee"
-}
-###
-DELETE http://localhost:5000/posts/6266cacd725e9993342fdee1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjY1N2YxYTMzMDJjYjNlM2I0M2Y3MjgiLCJ1c2VybmFtZSI6InZoa2h1eWVuMSIsImlhdCI6MTY1MDkwMzEzN30.HcRdka3E1wY4mAhLaoMEMrOlsapj_WVDcCetB2WERXA

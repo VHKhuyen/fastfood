@@ -1,11 +1,9 @@
 const authRouter = require('./auth')
-const siteRouter = require('./site')
 const postRouter = require('./post')
 
 function route(app) {
-  app.use('/auth', authRouter);
-  app.use('/posts', postRouter)
-  app.use('/',siteRouter)
+  app.use('/api/auth', authRouter);
+  app.use('/api/posts', postRouter)
 }
 
 module.exports = route;
