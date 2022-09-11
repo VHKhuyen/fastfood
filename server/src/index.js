@@ -1,11 +1,14 @@
 const express = require("express");
 const route = require("./routes");
+const cors = require("cors");
 const app = express();
 const PORT = 5000;
 
-app.use(express.json())
 const db = require("./config/db/index");
 db.connect();
-route(app)
+
+app.use(express.json());
+app.use(cors());
+route(app);
 
 app.listen(PORT, () => console.log(`sever started on port ${PORT}`));

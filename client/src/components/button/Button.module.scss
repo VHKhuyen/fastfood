@@ -3,19 +3,28 @@
 	cursor: pointer;
 	border-radius: 8px;
 	font-size: 14px;
-	font-weight: 700;
+	font-weight: 600;
 	color: var(--title-color);
 	padding: 16px 24px;
 	min-width: 90px;
-    user-select: none;
+	user-select: none;
 
 	+ .wrapper {
 		margin-left: 10px;
 	}
-    &.disable{
-        pointer-events: none;
-        opacity: 0.8;
-    }
+	&.disable {
+		pointer-events: none;
+		opacity: 0.8;
+	}
+}
+.radius {
+	border-radius: 28px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: none;
+	background-color: transparent;
+	&:hover {
+		border: 1px solid var(--primary-color);
+	}
 }
 .primary {
 	display: inline-block;
@@ -42,14 +51,9 @@
 	padding: 1.2rem 16px;
 	min-width: 90px;
 }
-.radius {
-	border-radius: 28px;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	box-shadow: none;
-	background-color: transparent;
-	&:hover {
-		border: 1px solid var(--primary-color);
-	}
+
+.width100 {
+	width: 100%;
 }
 .active {
 	background-color: var(--primary-color);

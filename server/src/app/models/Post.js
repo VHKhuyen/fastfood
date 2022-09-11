@@ -14,10 +14,6 @@ const Post = new Schema({
         type:Schema.Types.String,
         ref:'users',
     },
-    userId:{
-        type:Schema.Types.ObjectId,
-        ref:'users',
-    },
     image:{
         type:String,
         require:true,

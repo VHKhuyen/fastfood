@@ -19,7 +19,7 @@ class PostController {
             res.status(400).json({ success: false, message: 'title is required' })
         }
         try {
-            const newPost = new Post({ title, description, author: req.username, userId: req.userId, image, category })
+            const newPost = new Post({ title, description, author: req.username, image, category })
 
             await newPost.save()
             res.json({ success: true, message: 'Post successfully!', newPost })

@@ -15,6 +15,7 @@ function Button({
 	radius,
 	large,
 	small,
+	width100,
 	active = false,
 	className,
 	...passProps
@@ -38,9 +39,10 @@ function Button({
 		radius,
 		large,
 		small,
+		width100,
 		active,
 		disable,
-		[className]:className,
+		[className]: className,
 	})
 	return (
 		<Comp className={classes} {...props}>

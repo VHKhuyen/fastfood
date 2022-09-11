@@ -1,4 +1,4 @@
-import { Home, Menu, About, Contact, Upload, Auth } from '@/pages/index'
+import { Home, Menu, About, Contact, Upload, LoginForm, RegisterForm } from '@/pages/index'
 import { HeaderOnly } from '@/components/Layout'
 
 const publicRoutes = [
@@ -12,7 +12,8 @@ const publicRoutes = [
 	{ path: '/cart', component: Contact },
 	{ path: '/user', component: Contact },
 	{ path: '/upload', component: Upload, layout: HeaderOnly },
-	{ path: '/auth', component: Auth},
+	{ path: '/auth/register', component: RegisterForm, layout: null },
+	{ path: '/auth/login', component: LoginForm, layout: null },
 ]
 
 const privateRoutes = []
