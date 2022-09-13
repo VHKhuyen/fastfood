@@ -1,19 +1,24 @@
-import { useState, useRef } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState, useRef, useEffect } from 'react'
 import classNames from 'classnames/bind'
 import style from './search.module.scss'
-import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import HeadlessTippy from '@tippyjs/react/headless'
+
 import { Wrapper as PopperWrapper } from '@/components/popper'
 import SearchProduct from '@/components/SearchProduct'
-import { useEffect } from 'react/cjs/react.development'
+import { useDebounce } from '@/hooks'
+import { requestTikTok } from '@/utils/request'
+
 const cx = classNames.bind(style)
 
 function Search() {
 	const [searchValue, setSearchValue] = useState('')
 	const [searchResult, setSearchResult] = useState([])
 	const [showResult, setShowResult] = useState(true)
+	const [showLoading, setLoading] = useState(false)
 
+	const debounce = useDebounce(searchValue, 500)
 	const inputRef = useRef()
 
 	const handleClear = () => {
@@ -26,10 +31,29 @@ function Search() {
 	}
 
 	useEffect(() => {
-		setTimeout(() => {
-			setSearchResult([1, 2, 3])
-		}, 0)
-	}, [searchValue])
+		if (!debounce.trim()) {
+			setSearchResult([])
+			return
+		}
+		setLoading(true)
+		async function fetchData() {
+			try {
+				const response = await requestTikTok.get('/users/search', {
+					params: {
+						q: debounce,
+						type: 'less',
+					},
+				})
+				if (response) {
+					setSearchResult(response.data.data)
+				}
+				setLoading(false)
+			} catch (error) {
+				setLoading(false)
+			}
+		}
+		fetchData()
+	}, [debounce])
 	return (
 		<HeadlessTippy
 			visible={showResult && searchResult.length > 0}
@@ -38,10 +62,9 @@ function Search() {
 				<div className={cx('search-result')} tabIndex="-1" {...attrs}>
 					<PopperWrapper>
 						<h4 className={cx('search-title')}>product</h4>
-						<SearchProduct />
-						<SearchProduct />
-						<SearchProduct />
-						<SearchProduct />
+						{searchResult.map((result) => (
+							<SearchProduct key={result.id} {...result} />
+						))}
 					</PopperWrapper>
 				</div>
 			)}
@@ -56,10 +79,12 @@ function Search() {
 					onChange={(e) => setSearchValue(e.target.value)}
 					placeholder="Tìm kiếm sản phẩm, bài viết,..."
 				/>
-				{/* <button className={cx("loading")}>
-          <FontAwesomeIcon icon={faSpinner} />
-        </button> */}
-				{!!searchValue && (
+				{showLoading && (
+					<button className={cx('loading')}>
+						<FontAwesomeIcon icon={faSpinner} />
+					</button>
+				)}
+				{!!searchValue && !showLoading && (
 					<button className={cx('clear')} onClick={handleClear}>
 						<FontAwesomeIcon icon={faCircleXmark} />
 					</button>

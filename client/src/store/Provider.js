@@ -29,16 +29,18 @@ function Provider({ children }) {
 	useEffect(() => {
 		loadUser()
 	}, [])
-	//  login
-	const loginUser = async (userForm) => {
+
+	//register
+	const registerUser = async (userForm) => {
 		try {
 			const response = await axios({
 				method: 'post',
-				url: `${apiUrl}/auth/login`,
+				url: `${apiUrl}/auth/register`,
 				data: userForm,
 			})
 			if (response.data.success) {
 				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
+				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 			return response.data
 		} catch (error) {
@@ -50,7 +52,29 @@ function Provider({ children }) {
 		}
 	}
 
-	const stateAuth = { ...state, loginUser, loadUser }
+	//  login
+	const loginUser = async (userForm) => {
+		try {
+			const response = await axios({
+				method: 'post',
+				url: `${apiUrl}/auth/login`,
+				data: userForm,
+			})
+			if (response.data.success) {
+				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
+				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
+			}
+			return response.data
+		} catch (error) {
+			if (error.response.data) {
+				return error.response.data
+			} else {
+				return { success: false, message: error.message }
+			}
+		}
+	}
+
+	const stateAuth = { ...state, registerUser, loginUser, loadUser }
 	return <Context.Provider value={{ stateAuth, dispatch }}>{children}</Context.Provider>
 }
 export default Provider

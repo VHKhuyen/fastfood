@@ -23,7 +23,7 @@ class AuthController {
     if (!username || !password) {
       return res
         .status(400)
-        .json({ success: false, message: "missing username and/or password" });
+        .json({ success: false, message: "Sai tài khoản hoặc mật khẩu" });
     }
     try {
       //check for existing user
@@ -31,7 +31,7 @@ class AuthController {
       if (user)
         return res.status(400).json({
           success: false,
-          message: " username already register taken",
+          message: "Tài khoản đã tồn tại.",
         });
 
       const hashPassword = await argon2.hash(password);
@@ -46,7 +46,7 @@ class AuthController {
       );
       res.json({
         success: true,
-        message: "user created successfully",
+        message: "Tạo tài khoản thành công",
         accessToken,
       });
     } catch (error) {

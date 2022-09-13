@@ -1,22 +1,22 @@
 import { useState } from 'react'
-import { Link, useNavigate, Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import { Button } from '@/components'
 import style from './auth.module.scss'
 import classNames from 'classnames/bind'
 import FormInput from '@/components/formInput'
-import { useStore } from '@/store/hooks'
+import { useStore } from '@/hooks'
 
 const cx = classNames.bind(style)
 
 function LoginForm() {
 	let body
 
-	const navigate = useNavigate()
 	const [valueForm, setValueForm] = useState({
 		username: '',
 		password: '',
 	})
+	const [message, setMessage] = useState({ error: false, message: '' })
 	const {
 		stateAuth: { loginUser, isAuthenticated, authLoading },
 	} = useStore()
@@ -46,9 +46,10 @@ function LoginForm() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
-			const loginData = await loginUser(valueForm)
-			console.log(loginData)
-			navigate('/')
+			const response = await loginUser(valueForm)
+			if (!response.success) {
+				setMessage({ error: true, message: response.message })
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -67,6 +68,7 @@ function LoginForm() {
 			<div className={cx('wrapper')}>
 				<form onSubmit={handleSubmit}>
 					<h1>Đăng nhập</h1>
+					{message.error && <h1>{message.message}</h1>}
 					{inputs.map((input) => (
 						<FormInput key={input.id} {...input} value={valueForm[input.name]} onChange={handleOnChange} />
 					))}

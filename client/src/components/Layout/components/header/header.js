@@ -12,7 +12,7 @@ import Image from '@/components/image'
 import Search from '../search/search'
 import 'tippy.js/dist/tippy.css'
 
-import { useStore } from '@/store/hooks'
+import { useStore } from '@/hooks'
 
 const cx = classNames.bind(style)
 
