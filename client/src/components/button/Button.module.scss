@@ -6,7 +6,7 @@
 	font-weight: 600;
 	color: var(--title-color);
 	padding: 16px 24px;
-	min-width: 90px;
+	width: max-content;
 	user-select: none;
 
 	+ .wrapper {
@@ -45,11 +45,9 @@
 }
 .large {
 	padding: 1.8rem 2.8rem;
-	min-width: 100px;
 }
 .small {
 	padding: 1.2rem 16px;
-	min-width: 90px;
 }
 
 .width100 {

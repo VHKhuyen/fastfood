@@ -8,7 +8,7 @@ import HeadlessTippy from '@tippyjs/react/headless'
 import { Wrapper as PopperWrapper } from '@/components/popper'
 import SearchProduct from '@/components/SearchProduct'
 import { useDebounce } from '@/hooks'
-import { requestTikTok } from '@/utils/request'
+import { search } from '@/apiServives/searchServices'
 
 const cx = classNames.bind(style)
 
@@ -29,28 +29,28 @@ function Search() {
 	const handleHideResults = () => {
 		setShowResult(false)
 	}
+	const handleSubmit = (e) => {
+		e.preventDefault()
+	}
+	const handleChange = (e) => {
+		const searchValue = e.target.value
+		if (!searchValue.startsWith(' ')) {
+			setSearchValue(searchValue)
+		}
+	}
 
 	useEffect(() => {
 		if (!debounce.trim()) {
 			setSearchResult([])
 			return
 		}
-		setLoading(true)
-		async function fetchData() {
-			try {
-				const response = await requestTikTok.get('/users/search', {
-					params: {
-						q: debounce,
-						type: 'less',
-					},
-				})
-				if (response) {
-					setSearchResult(response.data.data)
-				}
-				setLoading(false)
-			} catch (error) {
-				setLoading(false)
+		const fetchData = async () => {
+			setLoading(true)
+			const response = await search(debounce)
+			if (response) {
+				setSearchResult(response.data)
 			}
+			setLoading(false)
 		}
 		fetchData()
 	}, [debounce])
@@ -70,29 +70,31 @@ function Search() {
 			)}
 			onClickOutside={handleHideResults}
 		>
-			<div className={cx('search', 'd-flex-center')}>
-				<input
-					ref={inputRef}
-					onFocus={() => setShowResult(true)}
-					value={searchValue}
-					type="text"
-					onChange={(e) => setSearchValue(e.target.value)}
-					placeholder="Tìm kiếm sản phẩm, bài viết,..."
-				/>
-				{showLoading && (
-					<button className={cx('loading')}>
-						<FontAwesomeIcon icon={faSpinner} />
+			<div>
+				<div className={cx('search', 'd-flex-center')}>
+					<input
+						ref={inputRef}
+						onFocus={() => setShowResult(true)}
+						value={searchValue}
+						type="text"
+						onChange={handleChange}
+						placeholder="Tìm kiếm sản phẩm, bài viết,..."
+					/>
+					{showLoading && (
+						<button className={cx('loading')}>
+							<FontAwesomeIcon icon={faSpinner} />
+						</button>
+					)}
+					{!!searchValue && !showLoading && (
+						<button className={cx('clear')} onClick={handleClear}>
+							<FontAwesomeIcon icon={faCircleXmark} />
+						</button>
+					)}
+					<span></span>
+					<button className={cx('search-btn')} onMouseDown={handleSubmit}>
+						<FontAwesomeIcon icon={faMagnifyingGlass} />
 					</button>
-				)}
-				{!!searchValue && !showLoading && (
-					<button className={cx('clear')} onClick={handleClear}>
-						<FontAwesomeIcon icon={faCircleXmark} />
-					</button>
-				)}
-				<span></span>
-				<button className={cx('search-btn')}>
-					<FontAwesomeIcon icon={faMagnifyingGlass} />
-				</button>
+				</div>
 			</div>
 		</HeadlessTippy>
 	)

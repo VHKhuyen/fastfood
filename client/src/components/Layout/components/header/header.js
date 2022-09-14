@@ -33,13 +33,11 @@ function Header() {
 				</Link>
 			</div>
 
-			<div className={cx('body', 'd-flex-center')}>
-				<Search />
-			</div>
+			<Search />
 
 			<div className={cx('actions')}>
 				<div className={cx('wishlist')}>
-					<Tippy content="Yeu Thich">
+					<Tippy content="Yêu thích">
 						<NavLink to="/wishlist" className={navLinkClass}>
 							<FontAwesomeIcon icon={faHeart} />
 							<span className={cx('count')}>0</span>
@@ -47,10 +45,12 @@ function Header() {
 					</Tippy>
 				</div>
 				<div className={cx('cart')}>
-					<NavLink to="/cart" className={navLinkClass}>
-						<FontAwesomeIcon icon={faCartShopping} />
-						<span className={cx('count')}>0</span>
-					</NavLink>
+					<Tippy content="Giỏ hàng">
+						<NavLink to="/cart" className={navLinkClass}>
+							<FontAwesomeIcon icon={faCartShopping} />
+							<span className={cx('count')}>0</span>
+						</NavLink>
+					</Tippy>
 				</div>
 				{isAuthenticated ? (
 					<>
