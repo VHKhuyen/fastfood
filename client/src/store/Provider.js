@@ -2,25 +2,24 @@ import { useReducer, useEffect } from 'react'
 
 import Context from './Context'
 import reducer, { initState, setAuth } from './state'
-import axios from 'axios'
-import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from './constants'
 import setAuthToKen from '@/utils/setAuthToken'
+import { requestFastFood } from '@/utils/httpRequest'
 
 function Provider({ children }) {
 	const [state, dispatch] = useReducer(reducer, initState)
 
 	// authenticated users
 	const loadUser = async () => {
-		if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
-			setAuthToKen(localStorage[LOCAL_STORAGE_TOKEN_NAME])
+		if (localStorage[process.env.LOCAL_STORAGE_TOKEN_NAME]) {
+			setAuthToKen(localStorage[process.env.LOCAL_STORAGE_TOKEN_NAME])
 		}
 		try {
-			const response = await axios.get(`${apiUrl}/auth`)
+			const response = await requestFastFood.get('/auth')
 			if (response.data.success) {
 				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 		} catch (error) {
-			localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+			localStorage.removeItem(process.env.LOCAL_STORAGE_TOKEN_NAME)
 			setAuthToKen(null)
 			dispatch(setAuth({ isAuthenticated: false, user: null }))
 		}
@@ -33,13 +32,12 @@ function Provider({ children }) {
 	//register
 	const registerUser = async (userForm) => {
 		try {
-			const response = await axios({
-				method: 'post',
-				url: `${apiUrl}/auth/register`,
+			const response = await requestFastFood.post({
+				url: '/auth/register',
 				data: userForm,
 			})
 			if (response.data.success) {
-				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
+				localStorage.setItem(process.env.LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
 				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 			return response.data
@@ -55,13 +53,12 @@ function Provider({ children }) {
 	//  login
 	const loginUser = async (userForm) => {
 		try {
-			const response = await axios({
-				method: 'post',
-				url: `${apiUrl}/auth/login`,
+			const response = await requestFastFood.post({
+				url: '/auth/login',
 				data: userForm,
 			})
 			if (response.data.success) {
-				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
+				localStorage.setItem(process.env.LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
 				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 			return response.data

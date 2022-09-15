@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import styles from './Button.module.scss'
 import { Link } from 'react-router-dom'
@@ -12,10 +13,10 @@ function Button({
 	primary = false,
 	white = false,
 	disable = false,
-	radius,
-	large,
-	small,
-	width100,
+	radius = false,
+	large = false,
+	small = false,
+	width100 = false,
 	active = false,
 	className,
 	...passProps
@@ -50,5 +51,19 @@ function Button({
 		</Comp>
 	)
 }
-
+Button.propTypes = {
+	to: PropTypes.string,
+	href: PropTypes.string,
+	onClick: PropTypes.func,
+	children: PropTypes.node.isRequired,
+	primary: PropTypes.bool,
+	white: PropTypes.bool,
+	disable: PropTypes.bool,
+	radius: PropTypes.bool,
+	large: PropTypes.bool,
+	small: PropTypes.bool,
+	width100: PropTypes.bool,
+	active: PropTypes.bool,
+	className: PropTypes.string,
+}
 export default Button

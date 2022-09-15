@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 import style from './formInput.module.scss'
 import classNames from 'classnames/bind'
 
@@ -30,4 +31,8 @@ function FormInput({ onChange, error, ...props }) {
 	)
 }
 
+FormInput.propTypes = {
+	onChange: PropTypes.func,
+	error: PropTypes.string,
+}
 export default FormInput
