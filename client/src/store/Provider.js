@@ -4,14 +4,15 @@ import Context from './Context'
 import reducer, { initState, setAuth } from './state'
 import setAuthToKen from '@/utils/setAuthToken'
 import { requestFastFood } from '@/utils/httpRequest'
-
+const LOCAL_STORAGE_TOKEN_NAME = 'fastfood'
 function Provider({ children }) {
 	const [state, dispatch] = useReducer(reducer, initState)
 
 	// authenticated users
 	const loadUser = async () => {
-		if (localStorage[process.env.LOCAL_STORAGE_TOKEN_NAME]) {
-			setAuthToKen(localStorage[process.env.LOCAL_STORAGE_TOKEN_NAME])
+		const token = localStorage[LOCAL_STORAGE_TOKEN_NAME]
+		if (token) {
+			setAuthToKen(token)
 		}
 		try {
 			const response = await requestFastFood.get('/auth')
@@ -19,7 +20,7 @@ function Provider({ children }) {
 				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 		} catch (error) {
-			localStorage.removeItem(process.env.LOCAL_STORAGE_TOKEN_NAME)
+			localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
 			setAuthToKen(null)
 			dispatch(setAuth({ isAuthenticated: false, user: null }))
 		}
@@ -32,12 +33,10 @@ function Provider({ children }) {
 	//register
 	const registerUser = async (userForm) => {
 		try {
-			const response = await requestFastFood.post({
-				url: '/auth/register',
-				data: userForm,
-			})
+			const response = await requestFastFood.post('/auth/register', userForm)
+
 			if (response.data.success) {
-				localStorage.setItem(process.env.LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
+				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
 				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 			return response.data
@@ -53,12 +52,9 @@ function Provider({ children }) {
 	//  login
 	const loginUser = async (userForm) => {
 		try {
-			const response = await requestFastFood.post({
-				url: '/auth/login',
-				data: userForm,
-			})
+			const response = await requestFastFood.post('/auth/login', userForm)
 			if (response.data.success) {
-				localStorage.setItem(process.env.LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
+				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
 				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 			return response.data
@@ -70,8 +66,11 @@ function Provider({ children }) {
 			}
 		}
 	}
-
-	const stateAuth = { ...state, registerUser, loginUser, loadUser }
+	const logoutUser = () => {
+		localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+		dispatch(setAuth({ isAuthenticated: false }))
+	}
+	const stateAuth = { ...state, registerUser, loginUser, loadUser, logoutUser }
 	return <Context.Provider value={{ stateAuth, dispatch }}>{children}</Context.Provider>
 }
 export default Provider

@@ -1,10 +1,9 @@
-import axios from 'axios'
-
+import { requestFastFood } from './httpRequest'
 const setAuthToKen = (token) => {
 	if (token) {
-		axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+		requestFastFood.defaults.headers.common['Authorization'] = `Bearer ${token}`
 	} else {
-		delete axios.defaults.headers.common['Authorization']
+		delete requestFastFood.defaults.headers.common['Authorization']
 	}
 }
 

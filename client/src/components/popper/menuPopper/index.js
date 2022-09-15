@@ -3,12 +3,17 @@ import Tippy from '@tippyjs/react/headless'
 import classNames from 'classnames/bind'
 import style from './menuPopper.module.scss'
 import { Wrapper as PopperWrapper } from '@/components/popper'
+import { useStore } from '@/hooks'
 
 const cx = classNames.bind(style)
 MenuPopper.propTypes = {
 	children: PropTypes.node.isRequired,
 }
 function MenuPopper({ children, hideOnClick = false }) {
+	const {
+		stateAuth: { logoutUser },
+	} = useStore()
+	const handleLogout = () => logoutUser()
 	return (
 		<Tippy
 			interactive
@@ -19,52 +24,18 @@ function MenuPopper({ children, hideOnClick = false }) {
 					<PopperWrapper>
 						<ul>
 							<li>
-								{' '}
 								<a href="/">Viết Blog</a>
 							</li>
 							<li>
-								{' '}
 								<a href="/">Bài viết của tôi</a>
 							</li>
 							<li>
-								{' '}
 								<a href="/">Bài viết đã lưu</a>
 							</li>
 							<li>
-								{' '}
-								<a href="/">Đăng xuất</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Viết Blog</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Bài viết của tôi</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Bài viết đã lưu</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Đăng xuất</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Viết Blog</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Bài viết của tôi</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Bài viết đã lưu</a>
-							</li>
-							<li>
-								{' '}
-								<a href="/">Đăng xuất</a>
+								<a href="/" onClick={handleLogout}>
+									Đăng xuất
+								</a>
 							</li>
 						</ul>
 					</PopperWrapper>
