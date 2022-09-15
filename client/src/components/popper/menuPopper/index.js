@@ -31,6 +31,38 @@ function MenuPopper({ children, hideOnClick = false }) {
 								{' '}
 								<a href="/">Đăng xuất</a>
 							</li>
+							<li>
+								{' '}
+								<a href="/">Viết Blog</a>
+							</li>
+							<li>
+								{' '}
+								<a href="/">Bài viết của tôi</a>
+							</li>
+							<li>
+								{' '}
+								<a href="/">Bài viết đã lưu</a>
+							</li>
+							<li>
+								{' '}
+								<a href="/">Đăng xuất</a>
+							</li>
+							<li>
+								{' '}
+								<a href="/">Viết Blog</a>
+							</li>
+							<li>
+								{' '}
+								<a href="/">Bài viết của tôi</a>
+							</li>
+							<li>
+								{' '}
+								<a href="/">Bài viết đã lưu</a>
+							</li>
+							<li>
+								{' '}
+								<a href="/">Đăng xuất</a>
+							</li>
 						</ul>
 					</PopperWrapper>
 				</div>

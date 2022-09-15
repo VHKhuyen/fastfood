@@ -8,7 +8,7 @@ import HeadlessTippy from '@tippyjs/react/headless'
 import { Wrapper as PopperWrapper } from '@/components/popper'
 import SearchProduct from '@/components/SearchProduct'
 import { useDebounce } from '@/hooks'
-import { search } from '@/apiServives/searchServices'
+import { search } from '@/services/searchServices'
 
 const cx = classNames.bind(style)
 

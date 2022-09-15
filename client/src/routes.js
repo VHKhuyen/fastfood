@@ -1,20 +1,20 @@
 import { Home, Menu, About, Contact, Upload, LoginForm, RegisterForm } from '@/pages/index'
-import { HeaderOnly } from '@/components/Layout'
-import routeConfig from '@/config/routes'
+import { HeaderOnly } from '@/layouts'
+import config from '@/config'
 
 const publicRoutes = [
-	{ path: routeConfig.home, component: Home },
-	{ path: routeConfig.menu, component: Menu },
-	{ path: routeConfig.about, component: About },
-	{ path: routeConfig.shop, component: Contact },
-	{ path: routeConfig.blog, component: Contact },
-	{ path: routeConfig.contact, component: Contact },
-	{ path: routeConfig.wishlist, component: Contact },
-	{ path: routeConfig.cart, component: Contact },
-	{ path: routeConfig.user, component: Contact },
-	{ path: routeConfig.upload, component: Upload, layout: HeaderOnly },
-	{ path: routeConfig.register, component: RegisterForm, layout: null },
-	{ path: routeConfig.login, component: LoginForm, layout: null },
+	{ path: config.routes.home, component: Home },
+	{ path: config.routes.menu, component: Menu },
+	{ path: config.routes.about, component: About },
+	{ path: config.routes.shop, component: Contact },
+	{ path: config.routes.blog, component: Contact },
+	{ path: config.routes.contact, component: Contact },
+	{ path: config.routes.wishlist, component: Contact },
+	{ path: config.routes.cart, component: Contact },
+	{ path: config.routes.user, component: Contact },
+	{ path: config.routes.upload, component: Upload, layout: HeaderOnly },
+	{ path: config.routes.register, component: RegisterForm, layout: null },
+	{ path: config.routes.login, component: LoginForm, layout: null },
 ]
 
 const privateRoutes = []

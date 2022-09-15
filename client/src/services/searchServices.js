@@ -1,4 +1,4 @@
-import { requestTikTok } from '@/utils/request'
+import { requestTikTok } from '@/utils/httpRequest'
 
 export const search = async (q, type = 'less') => {
 	try {
