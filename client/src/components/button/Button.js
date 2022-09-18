@@ -26,6 +26,13 @@ function Button({
 		onClick,
 		...passProps,
 	}
+	if (disable) {
+		Object.keys(props).forEach((key) => {
+			if (key.startsWith('on')) {
+				delete props[key]
+			}
+		})
+	}
 	if (to) {
 		props.to = to
 		Comp = Link

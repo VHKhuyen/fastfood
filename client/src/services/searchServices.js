@@ -1,8 +1,9 @@
 import { requestTikTok } from '@/utils/httpRequest'
 
-export const search = async (q, type = 'less') => {
+export const search = async (controller, q, type = 'less') => {
 	try {
 		const response = await requestTikTok.get('/users/search', {
+			signal: controller.signal,
 			params: {
 				q,
 				type,
@@ -10,6 +11,6 @@ export const search = async (q, type = 'less') => {
 		})
 		return response.data
 	} catch (error) {
-		console.log(error)
+		console.log(error.message)
 	}
 }

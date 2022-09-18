@@ -44,15 +44,19 @@ function Search() {
 			setSearchResult([])
 			return
 		}
+		const controller = new AbortController()
 		const fetchData = async () => {
 			setLoading(true)
-			const response = await search(debounce)
+			const response = await search(controller, debounce)
 			if (response) {
 				setSearchResult(response.data)
 			}
 			setLoading(false)
 		}
 		fetchData()
+		return () => {
+			controller.abort()
+		}
 	}, [debounce])
 	return (
 		<div>

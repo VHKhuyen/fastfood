@@ -21,6 +21,11 @@
 		margin-bottom: 36px;
 		font-size: 3rem;
 	}
+	h4 {
+		color: red;
+		text-align: center;
+		margin: 20px 0;
+	}
 	.help {
 		font-size: 1.4rem;
 		margin: 24px 0;
@@ -30,5 +35,19 @@
 			color: var(--primary-color);
 			margin-left: 4px;
 		}
+	}
+}
+.btn-disable {
+	svg {
+		animation: spinner 1s linear infinite;
+	}
+}
+
+@keyframes spinner {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(360deg);
 	}
 }

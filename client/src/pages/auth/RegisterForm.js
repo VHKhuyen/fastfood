@@ -5,6 +5,9 @@ import FormInput from '@/components/formInput'
 import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useStore } from '@/hooks'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import config from '@/config'
 
 const cx = classNames.bind(style)
 
@@ -61,15 +64,8 @@ function RegisterForm() {
 	const handleOnChange = (e) => {
 		setValueForm({ ...valueForm, [e.target.name]: e.target.value })
 	}
-
-	if (authLoading) {
-		body = (
-			<>
-				<h1>Loading...</h1>
-			</>
-		)
-	} else if (isAuthenticated) {
-		body = <Navigate to="/" />
+	if (isAuthenticated) {
+		body = <Navigate to={config.routes.home} />
 	} else {
 		body = (
 			<div className={cx('wrapper')}>
@@ -80,9 +76,15 @@ function RegisterForm() {
 					{inputs.map((input) => (
 						<FormInput key={input.id} {...input} value={valueForm[input.name]} onChange={handleOnChange} />
 					))}
-					<Button primary width100 radius>
-						Đăng ký
-					</Button>
+					{authLoading ? (
+						<Button primary width100 radius disable className={cx('btn-disable')}>
+							<FontAwesomeIcon icon={faSpinner} />
+						</Button>
+					) : (
+						<Button primary width100 radius>
+							Đăng ký
+						</Button>
+					)}
 					<div className={cx('help')}>
 						<span>Bạn đã có tài khoản?</span>
 						<Link to="/auth/login">Đăng Nhập</Link>

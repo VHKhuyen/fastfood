@@ -6,12 +6,14 @@ import style from './auth.module.scss'
 import classNames from 'classnames/bind'
 import FormInput from '@/components/formInput'
 import { useStore } from '@/hooks'
+import config from '@/config'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 const cx = classNames.bind(style)
 
 function LoginForm() {
 	let body
-
 	const [valueForm, setValueForm] = useState({
 		username: '',
 		password: '',
@@ -21,9 +23,6 @@ function LoginForm() {
 		stateAuth: { loginUser, isAuthenticated, authLoading },
 	} = useStore()
 
-	if (authLoading) {
-		body = <h1>Loading</h1>
-	}
 	const inputs = [
 		{
 			id: 1,
@@ -58,32 +57,34 @@ function LoginForm() {
 	const handleOnChange = (e) => {
 		setValueForm({ ...valueForm, [e.target.name]: e.target.value })
 	}
-
-	if (authLoading) {
-		body = <h1>Loading</h1>
-	} else if (isAuthenticated) {
-		return <Navigate to="/" />
+	if (isAuthenticated) {
+		body = <Navigate to={config.routes.home} />
 	} else {
 		body = (
 			<div className={cx('wrapper')}>
 				<form onSubmit={handleSubmit}>
 					<h1>Đăng nhập</h1>
-					{message.error && <h1>{message.message}</h1>}
+					{!!message.error && <h4>{message.message}</h4>}
 					{inputs.map((input) => (
 						<FormInput key={input.id} {...input} value={valueForm[input.name]} onChange={handleOnChange} />
 					))}
-					<Button primary width100 radius>
-						Đăng nhập
-					</Button>
+					{authLoading ? (
+						<Button primary width100 radius disable className={cx('btn-disable')}>
+							<FontAwesomeIcon icon={faSpinner} />
+						</Button>
+					) : (
+						<Button primary width100 radius>
+							Đăng nhập
+						</Button>
+					)}
 					<div className={cx('help')}>
 						<span>Bạn chưa có tài khoản?</span>
-						<Link to="/auth/register">Đăng ký</Link>
+						<Link to={config.routes.register}>Đăng ký</Link>
 					</div>
 				</form>
 			</div>
 		)
 	}
-
 	return <>{body}</>
 }
 
