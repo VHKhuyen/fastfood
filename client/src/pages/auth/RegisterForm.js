@@ -8,6 +8,7 @@ import { useStore } from '@/hooks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import config from '@/config'
+import images from '@/assets/images'
 
 const cx = classNames.bind(style)
 
@@ -68,7 +69,12 @@ function RegisterForm() {
 		body = <Navigate to={config.routes.home} />
 	} else {
 		body = (
-			<div className={cx('wrapper')}>
+			<>
+				<div className={cx('login-header')}>
+					<Link to={config.routes.home}>
+						<img src={images.logo} alt="Logo" />
+					</Link>
+				</div>
 				<form onSubmit={handleSubmit}>
 					<h1>Đăng ký</h1>
 					{message.error && <h1>{message.message}</h1>}
@@ -87,13 +93,13 @@ function RegisterForm() {
 					)}
 					<div className={cx('help')}>
 						<span>Bạn đã có tài khoản?</span>
-						<Link to="/auth/login">Đăng Nhập</Link>
+						<Link to={config.routes.login}>Đăng Nhập</Link>
 					</div>
 				</form>
-			</div>
+			</>
 		)
 	}
-	return <>{body}</>
+	return <div className={cx('wrapper')}>{body}</div>
 }
 
 export default RegisterForm

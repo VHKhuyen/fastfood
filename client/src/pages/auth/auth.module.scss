@@ -3,7 +3,7 @@
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	background-image: url(../../assets/images/menu_bg1.jpeg);
+	background-image: url(../../assets/images/homeSlider2.jpeg);
 	background-size: cover;
 	background-position: center center;
 
@@ -37,6 +37,23 @@
 		}
 	}
 }
+.login-header {
+	position: absolute;
+	left: 3%;
+	top: 2%;
+	max-width: 100%;
+	border-bottom: transparent;
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+
+	a {
+		display: inline-block;
+		height: 42px;
+	}
+	img {
+		height: 100%;
+	}
+}
+
 .btn-disable {
 	svg {
 		animation: spinner 1s linear infinite;

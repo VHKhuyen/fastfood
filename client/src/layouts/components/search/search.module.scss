@@ -1,6 +1,5 @@
-.search,
 .search-result {
-	width: 420px;
+	width: 280px;
 }
 .search-title {
 	height: 30px;
@@ -30,7 +29,7 @@
 		background-color: transparent;
 	}
 	input {
-		width: 100%;
+		width: 100px;
 		font-weight: 400;
 		font-size: 1.6rem;
 		line-height: 22px;
@@ -41,10 +40,19 @@
 		outline: none;
 		padding: 0 4px;
 		border-radius: 10px;
-		padding-right: 36px;
+		padding-right: 28px;
+		transition: width 0.6s;
 	}
 	input:not(:placeholder-shown) ~ .search-btn {
 		color: #000;
+	}
+	input:focus {
+		width: 250px;
+		padding-right: 36px;
+	}
+	input:focus ~ .clear,
+	input:focus ~ .loading {
+		right: 52px;
 	}
 	span {
 		width: 1px;
@@ -61,9 +69,10 @@
 .clear,
 .loading {
 	position: absolute;
-	right: 52px;
+	right: 44px;
 	color: rgba(22, 24, 35, 0.34);
 	background-color: transparent;
+	transition: right 0.6s;
 }
 .loading {
 	animation: spinner 1.2s infinite;

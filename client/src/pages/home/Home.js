@@ -1,16 +1,32 @@
-/* eslint-disable react/style-prop-object */
-/* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 import classNames from 'classnames/bind'
-import style from "./Home.module.scss";
+import style from './home.module.scss'
+import { homeSliderData } from './data'
+import Slide from '@/components/slider/Slide'
 
 const cx = classNames.bind(style)
 
 function Home() {
-  return (
-    <div className={cx('wrapper')}>
-    </div>
-  );
+	const settings = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+	}
+	return (
+		<div className={cx('wrapper')}>
+			<div className={cx('sliders')}>
+				<Slider {...settings}>
+					{homeSliderData.map((item) => {
+						return <Slide key={item.id} {...item} />
+					})}
+				</Slider>
+			</div>
+		</div>
+	)
 }
 
-export default Home;
+export default Home

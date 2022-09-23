@@ -1,5 +1,7 @@
+.sidebar {
+	margin-top: 16px;
+}
 .wrapper {
-	--width: 96px;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -9,10 +11,12 @@
 	position: -webkit-sticky;
 	position: sticky;
 	top: 74px;
-	width: var(--width);
+	width: var(--width-sidebar);
 	z-index: 8;
 }
-
+.list li:first-child a {
+	margin-top: 0;
+}
 .list li a {
 	align-items: center;
 	border-radius: 16px;

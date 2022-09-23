@@ -13,6 +13,7 @@ import Search from '../search/search'
 import 'tippy.js/dist/tippy.css'
 
 import { useStore } from '@/hooks'
+import config from '@/config'
 
 const cx = classNames.bind(style)
 
@@ -28,17 +29,16 @@ function Header() {
 	return (
 		<div className={cx('wrapper')}>
 			<div className={cx('logo')}>
-				<Link to="/">
+				<Link to={config.routes.home}>
 					<img src={images.logo} alt="logo" />
 				</Link>
 			</div>
 
-			<Search />
-
 			<div className={cx('actions')}>
+				<Search />
 				<div className={cx('wishlist')}>
 					<Tippy content="Yêu thích">
-						<NavLink to="/wishlist" className={navLinkClass}>
+						<NavLink to={config.routes.wishlist} className={navLinkClass}>
 							<FontAwesomeIcon icon={faHeart} />
 							<span className={cx('count')}>0</span>
 						</NavLink>
@@ -46,7 +46,7 @@ function Header() {
 				</div>
 				<div className={cx('cart')}>
 					<Tippy content="Giỏ hàng">
-						<NavLink to="/cart" className={navLinkClass}>
+						<NavLink to={config.routes.cart} className={navLinkClass}>
 							<FontAwesomeIcon icon={faCartShopping} />
 							<span className={cx('count')}>0</span>
 						</NavLink>
@@ -63,7 +63,7 @@ function Header() {
 						</MenuPopper>
 					</>
 				) : (
-					<Button to="/auth/login" primary small>
+					<Button to={config.routes.login} primary small>
 						Đăng nhập
 					</Button>
 				)}

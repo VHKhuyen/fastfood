@@ -1,4 +1,5 @@
 import { useReducer, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 import Context from './Context'
 import reducer, { initState, setAuth } from './state'
@@ -15,15 +16,14 @@ function Provider({ children }) {
 			setAuthToKen(token)
 		}
 		try {
-			dispatch(setAuth({ authLoading: true }))
 			const response = await requestFastFood.get('/auth')
 			if (response.data.success) {
-				dispatch(setAuth({ authLoading: false, isAuthenticated: true, user: response.data.user }))
+				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 		} catch (error) {
 			localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
 			setAuthToKen(null)
-			dispatch(setAuth({ authLoading: false, isAuthenticated: false, user: null }))
+			dispatch(setAuth({ isAuthenticated: false, user: null }))
 		}
 	}
 
@@ -77,5 +77,8 @@ function Provider({ children }) {
 	}
 	const stateAuth = { ...state, dispatch, registerUser, loginUser, loadUser, logoutUser }
 	return <Context.Provider value={{ stateAuth, dispatch }}>{children}</Context.Provider>
+}
+Provider.propTypes = {
+	children: PropTypes.node,
 }
 export default Provider

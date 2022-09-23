@@ -10,6 +10,7 @@
 	--text-color: #808080;
 	--border-color: #e5e5e5;
 	--norican-font: 'Norican', sans-serif;
+	--width-sidebar: 96px;
 }
 * {
 	margin: 0;
@@ -26,7 +27,7 @@ body {
 	line-height: 1.5;
 	text-rendering: optimizespeed;
 	color: var(--text-color);
-	overflow-y: overflow;
+	overflow-y: overlay;
 }
 h1,
 h2,

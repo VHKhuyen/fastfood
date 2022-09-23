@@ -6,7 +6,7 @@ import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-s
 import HeadlessTippy from '@tippyjs/react/headless'
 
 import { Wrapper as PopperWrapper } from '@/components/popper'
-import SearchProduct from '@/components/SearchProduct/SearchProduct'
+import SearchProduct from '@/components/searchProduct/SearchProduct'
 import { useDebounce } from '@/hooks'
 import { search } from '@/services/searchServices'
 
@@ -17,6 +17,7 @@ function Search() {
 	const [searchResult, setSearchResult] = useState([])
 	const [showResult, setShowResult] = useState(false)
 	const [showLoading, setLoading] = useState(false)
+	// const [lengthOfInput, setLengthOfInput] = useState(false)
 
 	const debounce = useDebounce(searchValue, 500)
 	const inputRef = useRef()
@@ -38,7 +39,13 @@ function Search() {
 			setSearchValue(searchValue)
 		}
 	}
-
+	const handleFocus = () => {
+		setShowResult(true)
+		// setLengthOfInput(true)
+	}
+	const handleBlur = () => {
+		// setLengthOfInput(false)
+	}
 	useEffect(() => {
 		if (!debounce.trim()) {
 			setSearchResult([])
@@ -58,51 +65,55 @@ function Search() {
 			controller.abort()
 		}
 	}, [debounce])
+
 	return (
-		<div>
-			<HeadlessTippy
-				visible={showResult && searchResult.length > 0}
-				interactive
-				render={(attrs) => (
-					<div className={cx('search-result')} tabIndex="-1" {...attrs}>
-						<PopperWrapper>
-							<h4 className={cx('search-title')}>product</h4>
-							{searchResult.map((result) => (
-								<SearchProduct key={result.id} {...result} />
-							))}
-						</PopperWrapper>
-					</div>
-				)}
-				onClickOutside={handleHideResults}
-			>
-				<div>
-					<div className={cx('search', 'd-flex-center')}>
-						<input
-							ref={inputRef}
-							onFocus={() => setShowResult(true)}
-							value={searchValue}
-							type="text"
-							onChange={handleChange}
-							placeholder="Tìm kiếm sản phẩm, bài viết,..."
-						/>
-						{showLoading && (
-							<button className={cx('loading')}>
-								<FontAwesomeIcon icon={faSpinner} />
-							</button>
-						)}
-						{!!searchValue && !showLoading && (
-							<button className={cx('clear')} onClick={handleClear}>
-								<FontAwesomeIcon icon={faCircleXmark} />
-							</button>
-						)}
-						<span></span>
-						<button className={cx('search-btn')} onMouseDown={handleSubmit}>
-							<FontAwesomeIcon icon={faMagnifyingGlass} />
-						</button>
-					</div>
+		<HeadlessTippy
+			visible={showResult && searchResult.length > 0}
+			interactive
+			render={(attrs) => (
+				<div className={cx('search-result')} tabIndex="-1" {...attrs}>
+					<PopperWrapper>
+						<h4 className={cx('search-title')}>product</h4>
+						{searchResult.map((result) => (
+							<SearchProduct key={result.id} {...result} />
+						))}
+					</PopperWrapper>
 				</div>
-			</HeadlessTippy>
-		</div>
+			)}
+			onClickOutside={handleHideResults}
+		>
+			<div>
+				<div
+					className={cx('search', 'd-flex-center', {
+						// 'input-large': lengthOfInput,
+					})}
+				>
+					<input
+						ref={inputRef}
+						value={searchValue}
+						type="text"
+						onFocus={handleFocus}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						placeholder="Tìm kiếm sản phẩm, bài viết,..."
+					/>
+					{showLoading && (
+						<button className={cx('loading')}>
+							<FontAwesomeIcon icon={faSpinner} />
+						</button>
+					)}
+					{!!searchValue && !showLoading && (
+						<button className={cx('clear')} onClick={handleClear}>
+							<FontAwesomeIcon icon={faCircleXmark} />
+						</button>
+					)}
+					<span></span>
+					<button className={cx('search-btn')} onMouseDown={handleSubmit}>
+						<FontAwesomeIcon icon={faMagnifyingGlass} />
+					</button>
+				</div>
+			</div>
+		</HeadlessTippy>
 	)
 }
 export default Search

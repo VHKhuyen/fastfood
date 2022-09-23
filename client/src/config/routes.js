@@ -9,7 +9,8 @@ const routes = {
 	cart: '/cart',
 	user: '/user',
 	upload: '/upload',
-	login: '/auth/login',
-	register: '/auth/register',
+	login: '/login',
+	register: '/register',
+	product: '/product/:id',
 }
 export default routes
