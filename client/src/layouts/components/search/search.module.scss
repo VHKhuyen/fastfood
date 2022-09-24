@@ -1,5 +1,5 @@
 .search-result {
-	width: 280px;
+	width: 300px;
 }
 .search-title {
 	height: 30px;
@@ -29,9 +29,9 @@
 		background-color: transparent;
 	}
 	input {
-		width: 100px;
+		width: 92px;
 		font-weight: 400;
-		font-size: 1.6rem;
+		font-size: 1.4rem;
 		line-height: 22px;
 		border: none;
 		caret-color: #444;
@@ -47,7 +47,7 @@
 		color: #000;
 	}
 	input:focus {
-		width: 250px;
+		width: 300px;
 		padding-right: 36px;
 	}
 	input:focus ~ .clear,

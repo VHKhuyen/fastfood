@@ -1,5 +1,4 @@
 import { Home, Menu, About, Contact, Upload, LoginForm, RegisterForm } from '@/pages/index'
-import { HeaderOnly } from '@/layouts'
 import config from '@/config'
 
 const publicRoutes = [
@@ -12,7 +11,7 @@ const publicRoutes = [
 	{ path: config.routes.wishlist, component: Contact },
 	{ path: config.routes.cart, component: Contact },
 	{ path: config.routes.user, component: Contact },
-	{ path: config.routes.upload, component: Upload, layout: HeaderOnly },
+	{ path: config.routes.upload, component: Upload },
 	{ path: config.routes.register, component: RegisterForm, layout: null },
 	{ path: config.routes.login, component: LoginForm, layout: null },
 ]

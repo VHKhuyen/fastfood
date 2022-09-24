@@ -75,8 +75,7 @@ html *::-webkit-scrollbar-track {
 }
 
 .active {
-	background-color: #e8ebed;
-	&:hover {
-		background-color: #e8ebed !important;
-	}
+	cursor: default;
+	border-bottom-color: var(--primary-color) !important;
+	font-weight: 600 !important;
 }

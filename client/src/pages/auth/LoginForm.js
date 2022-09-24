@@ -19,6 +19,7 @@ function LoginForm() {
 		username: '',
 		password: '',
 	})
+	const [loadSubmit, setLoadSubmit] = useState(false)
 	const [message, setMessage] = useState({ error: false, message: '' })
 	const {
 		stateAuth: { loginUser, isAuthenticated, authLoading },
@@ -46,7 +47,10 @@ function LoginForm() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
+			setLoadSubmit(true)
 			const response = await loginUser(valueForm)
+			setLoadSubmit(false)
+
 			if (!response.success) {
 				setMessage({ error: true, message: response.message })
 			}
@@ -58,11 +62,13 @@ function LoginForm() {
 	const handleOnChange = (e) => {
 		setValueForm({ ...valueForm, [e.target.name]: e.target.value })
 	}
-	if (isAuthenticated) {
+	if (authLoading) {
+		body = <h1>Loading...</h1>
+	} else if (isAuthenticated) {
 		body = <Navigate to={config.routes.home} />
 	} else {
 		body = (
-			<>
+			<div className={cx('wrapper')}>
 				<div className={cx('login-header')}>
 					<Link to={config.routes.home}>
 						<img src={images.logo} alt="Logo" />
@@ -74,7 +80,7 @@ function LoginForm() {
 					{inputs.map((input) => (
 						<FormInput key={input.id} {...input} value={valueForm[input.name]} onChange={handleOnChange} />
 					))}
-					{authLoading ? (
+					{loadSubmit ? (
 						<Button primary width100 radius disable className={cx('btn-disable')}>
 							<FontAwesomeIcon icon={faSpinner} />
 						</Button>
@@ -88,10 +94,10 @@ function LoginForm() {
 						<Link to={config.routes.register}>Đăng ký</Link>
 					</div>
 				</form>
-			</>
+			</div>
 		)
 	}
-	return <div className={cx('wrapper')}>{body}</div>
+	return <div>{body}</div>
 }
 
 export default LoginForm

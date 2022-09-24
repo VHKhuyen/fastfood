@@ -7,10 +7,8 @@ const cx = classNames.bind(style)
 
 function Sidebar() {
 	return (
-		<div className={cx('sidebar')}>
-			<div className={cx('wrapper')}>
-				<Menu />
-			</div>
+		<div className={cx('wrapper')}>
+			<Menu />
 		</div>
 	)
 }

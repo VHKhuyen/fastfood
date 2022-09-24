@@ -34,12 +34,11 @@ function Provider({ children }) {
 	//register
 	const registerUser = async (userForm) => {
 		try {
-			dispatch(setAuth({ authLoading: true }))
 			const response = await requestFastFood.post('/auth/register', userForm)
 
 			if (response.data.success) {
 				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
-				dispatch(setAuth({ authLoading: false, isAuthenticated: true, user: response.data.user }))
+				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 			return response.data
 		} catch (error) {
@@ -54,11 +53,10 @@ function Provider({ children }) {
 	//  login
 	const loginUser = async (userForm) => {
 		try {
-			dispatch(setAuth({ authLoading: true }))
 			const response = await requestFastFood.post('/auth/login', userForm)
 			if (response.data.success) {
 				localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken)
-				dispatch(setAuth({ authLoading: false, isAuthenticated: true, user: response.data.user }))
+				dispatch(setAuth({ isAuthenticated: true, user: response.data.user }))
 			}
 			return response.data
 		} catch (error) {
@@ -66,6 +64,7 @@ function Provider({ children }) {
 				dispatch(setAuth({ authLoading: false }))
 				return error.response.data
 			} else {
+				dispatch(setAuth({ authLoading: false }))
 				return { success: false, message: error.message }
 			}
 		}

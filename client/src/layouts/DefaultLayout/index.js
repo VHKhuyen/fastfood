@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types'
 import Header from '../components/header/header'
-import Sidebar from '../components/sidebar/Sidebar'
 import style from './defaultLayout.module.scss'
 import classNames from 'classnames/bind'
 
@@ -10,11 +10,12 @@ function DefaultLayout({ children }) {
 		<div className={cx('wrapper')}>
 			<Header />
 			<div className={cx('container')}>
-				<Sidebar />
 				<div className={cx('content')}>{children}</div>
 			</div>
 		</div>
 	)
 }
-
+DefaultLayout.propTypes = {
+	children: PropTypes.node.isRequired,
+}
 export default DefaultLayout

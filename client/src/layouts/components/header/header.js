@@ -1,17 +1,17 @@
 import { Link, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons'
-
 import classNames from 'classnames/bind'
 import style from './header.module.scss'
+
 import images from '@/assets/images'
-import Tippy from '@tippyjs/react'
 import { Button } from '@/components'
 import MenuPopper from '@/components/popper/menuPopper'
 import Image from '@/components/image'
 import Search from '../search/search'
+import Sidebar from '../sidebar/Sidebar'
+import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
-
 import { useStore } from '@/hooks'
 import config from '@/config'
 
@@ -33,7 +33,7 @@ function Header() {
 					<img src={images.logo} alt="logo" />
 				</Link>
 			</div>
-
+			<Sidebar />
 			<div className={cx('actions')}>
 				<Search />
 				<div className={cx('wishlist')}>
