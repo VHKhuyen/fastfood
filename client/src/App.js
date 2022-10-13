@@ -1,10 +1,23 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { publicRoutes } from '@/routes'
 import { DefaultLayout } from '@/layouts'
 import { Footer } from './components/index'
+import { loadUser } from '@/services/authServices'
+import { loadUserSuccess } from '@/redux/authSlice'
+import { useDispatch } from 'react-redux'
 
 function App() {
+	const dispatch = useDispatch()
+	useEffect(() => {
+		const checkUser = async () => {
+			const data = await loadUser()
+			if (data?.success) {
+				dispatch(loadUserSuccess())
+			}
+		}
+		checkUser()
+	}, [])
 	return (
 		<Router>
 			<div className="app">

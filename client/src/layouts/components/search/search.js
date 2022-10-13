@@ -16,15 +16,18 @@ function Search() {
 	const [searchValue, setSearchValue] = useState('')
 	const [searchResult, setSearchResult] = useState([])
 	const [showResult, setShowResult] = useState(false)
+	const [toggleSearch, setToggleSearch] = useState(false)
 	const [showLoading, setLoading] = useState(false)
-	// const [lengthOfInput, setLengthOfInput] = useState(false)
-
 	const debounce = useDebounce(searchValue, 500)
+
 	const inputRef = useRef()
+	const searchRef = useRef()
+	const showSearchRef = useRef()
 
 	const handleClear = () => {
 		setSearchValue('')
 		inputRef.current.focus()
+		setShowResult(false)
 	}
 
 	const handleHideResults = () => {
@@ -41,11 +44,27 @@ function Search() {
 	}
 	const handleFocus = () => {
 		setShowResult(true)
-		// setLengthOfInput(true)
 	}
-	const handleBlur = () => {
-		// setLengthOfInput(false)
+	const handleToggleSearch = () => {
+		setToggleSearch(true)
 	}
+
+	const handleClickOutside = (e) => {
+		if (e.target.parentNode === showSearchRef.current || e.target === showSearchRef.current) {
+			return
+		} else if (searchRef.current && !searchRef.current.contains(e.target)) {
+			setToggleSearch(false)
+		}
+	}
+
+	useEffect(() => {
+		document.addEventListener('click', handleClickOutside)
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside)
+		}
+	}, [toggleSearch])
+
 	useEffect(() => {
 		if (!debounce.trim()) {
 			setSearchResult([])
@@ -67,53 +86,51 @@ function Search() {
 	}, [debounce])
 
 	return (
-		<HeadlessTippy
-			visible={showResult && searchResult.length > 0}
-			interactive
-			render={(attrs) => (
-				<div className={cx('search-result')} tabIndex="-1" {...attrs}>
-					<PopperWrapper>
-						<h4 className={cx('search-title')}>product</h4>
-						{searchResult.map((result) => (
-							<SearchProduct key={result.id} {...result} />
-						))}
-					</PopperWrapper>
-				</div>
-			)}
-			onClickOutside={handleHideResults}
-		>
-			<div>
-				<div
-					className={cx('search', 'd-flex-center', {
-						// 'input-large': lengthOfInput,
-					})}
-				>
-					<input
-						ref={inputRef}
-						value={searchValue}
-						type="text"
-						onFocus={handleFocus}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						placeholder="Tìm kiếm sản phẩm, bài viết,..."
-					/>
-					{showLoading && (
-						<button className={cx('loading')}>
+		// div to fix waring tippy
+		<div>
+			<HeadlessTippy
+				visible={showResult && searchResult.length > 0}
+				interactive
+				render={(attrs) => (
+					<div className={cx('search-result')} tabIndex="-1" {...attrs}>
+						<PopperWrapper>
+							<h4 className={cx('search-title')}>product</h4>
+							{searchResult.map((result) => (
+								<SearchProduct key={result.id} {...result} />
+							))}
+						</PopperWrapper>
+					</div>
+				)}
+				onClickOutside={handleHideResults}
+			>
+				<div ref={searchRef}>
+					<div className={cx('search', { show: toggleSearch })}>
+						<input
+							id="input"
+							ref={inputRef}
+							value={searchValue}
+							type="text"
+							onFocus={handleFocus}
+							onChange={handleChange}
+							placeholder="Tìm kiếm sản phẩm, bài viết,..."
+						/>
+						<button className={cx('loading', { show: showLoading })}>
 							<FontAwesomeIcon icon={faSpinner} />
 						</button>
-					)}
-					{!!searchValue && !showLoading && (
-						<button className={cx('clear')} onClick={handleClear}>
+						<button className={cx('clear', { show: !!searchValue && !showLoading })} onClick={handleClear}>
 							<FontAwesomeIcon icon={faCircleXmark} />
 						</button>
-					)}
-					<span></span>
-					<button className={cx('search-btn')} onMouseDown={handleSubmit}>
+						<span></span>
+						<button className={cx('search-submit')} onMouseDown={handleSubmit}>
+							<FontAwesomeIcon icon={faMagnifyingGlass} />
+						</button>
+					</div>
+					<button ref={showSearchRef} onClick={handleToggleSearch} className={cx('search-btn', { hide: toggleSearch })}>
 						<FontAwesomeIcon icon={faMagnifyingGlass} />
 					</button>
 				</div>
-			</div>
-		</HeadlessTippy>
+			</HeadlessTippy>
+		</div>
 	)
 }
 export default Search

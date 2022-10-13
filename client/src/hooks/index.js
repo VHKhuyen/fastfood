@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types'
-import { useContext, useEffect, useState } from 'react'
-import { Context } from '@/store'
+import { useEffect, useState } from 'react'
 
-export const useStore = () => {
-	const { stateAuth, dispatch } = useContext(Context)
-	return { stateAuth, dispatch }
-}
 export const useDebounce = (value, delay) => {
 	const [debounce, setDebounce] = useState(value)
 

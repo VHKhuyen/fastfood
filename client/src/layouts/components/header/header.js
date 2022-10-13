@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames/bind'
@@ -12,16 +13,13 @@ import Search from '../search/search'
 import Sidebar from '../sidebar/Sidebar'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
-import { useStore } from '@/hooks'
 import config from '@/config'
 
 const cx = classNames.bind(style)
 
 function Header() {
-	const {
-		stateAuth: { isAuthenticated },
-	} = useStore()
-
+	const auth = useSelector((state) => state.auth)
+	const { isAuthenticated } = auth
 	const navLinkClass = ({ isActive }) => {
 		return isActive ? cx('isActive') : ''
 	}
@@ -55,11 +53,7 @@ function Header() {
 				{isAuthenticated ? (
 					<>
 						<MenuPopper>
-							<Image
-								src="https://images.pexels.com/photos/1251198/pexels-photo-1251198.jpeg?cs=srgb&dl=pexels-valeria-boltneva-1251198.jpg&fm=jpg"
-								className={cx('user-avatar')}
-								alt="Avatar"
-							/>
+							<Image className={cx('user-avatar')} alt="Avatar" />
 						</MenuPopper>
 					</>
 				) : (

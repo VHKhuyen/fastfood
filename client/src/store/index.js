@@ -1,2 +1,8 @@
-export { default as StoreProvider } from './Provider'
-export { default as Context } from './Context'
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer from '@/redux/authSlice'
+
+export const store = configureStore({
+	reducer: {
+		auth: authReducer,
+	},
+})

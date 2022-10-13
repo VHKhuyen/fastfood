@@ -1,4 +1,5 @@
-.search-result {
+.search-result,
+.search {
 	width: 300px;
 }
 .search-title {
@@ -10,6 +11,8 @@
 	color: rgba(22, 24, 35, 0.5);
 }
 .search {
+	align-items: center;
+	justify-content: center;
 	position: relative;
 	border: 2px solid #e8e8e8;
 	border-radius: 20px;
@@ -17,22 +20,29 @@
 	height: 40px;
 	padding-left: 8px;
 	transition: border-color 0.2s ease-in-out;
+	display: none;
 
-	&-btn {
+	&-submit {
 		cursor: pointer;
 		padding: 10px 10px;
 		font-size: 1.8rem;
-		background-color: #fff;
+		background-color: transparent;
 		opacity: 0.4;
 		transition: opacity 0.2s ease-in-out;
 		color: rgba(22, 24, 35, 0.34);
+	}
+	&-btn {
+		cursor: pointer;
+		font-size: 2.2rem;
 		background-color: transparent;
+		padding: 10px;
+		color: #444;
 	}
 	input {
-		width: 92px;
+		width: 100%;
 		font-weight: 400;
 		font-size: 1.4rem;
-		line-height: 22px;
+		line-height: 21px;
 		border: none;
 		caret-color: #444;
 		flex: 1 1;
@@ -43,16 +53,8 @@
 		padding-right: 28px;
 		transition: width 0.6s;
 	}
-	input:not(:placeholder-shown) ~ .search-btn {
+	input:not(:placeholder-shown) ~ .search-submit {
 		color: #000;
-	}
-	input:focus {
-		width: 300px;
-		padding-right: 36px;
-	}
-	input:focus ~ .clear,
-	input:focus ~ .loading {
-		right: 52px;
 	}
 	span {
 		width: 1px;
@@ -68,6 +70,7 @@
 
 .clear,
 .loading {
+	display: none;
 	position: absolute;
 	right: 44px;
 	color: rgba(22, 24, 35, 0.34);
@@ -77,7 +80,12 @@
 .loading {
 	animation: spinner 1.2s infinite;
 }
-
+.show {
+	display: flex;
+}
+.hide {
+	display: none;
+}
 @keyframes spinner {
 	from {
 		transform: rotate(0);

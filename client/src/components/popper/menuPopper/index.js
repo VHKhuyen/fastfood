@@ -3,16 +3,13 @@ import Tippy from '@tippyjs/react/headless'
 import classNames from 'classnames/bind'
 import style from './menuPopper.module.scss'
 import { Wrapper as PopperWrapper } from '@/components/popper'
-import { useStore } from '@/hooks'
+import { logoutUser } from '@/services/authServices'
 
 const cx = classNames.bind(style)
 MenuPopper.propTypes = {
 	children: PropTypes.node.isRequired,
 }
 function MenuPopper({ children, hideOnClick = false }) {
-	const {
-		stateAuth: { logoutUser },
-	} = useStore()
 	const handleLogout = () => logoutUser()
 	return (
 		<Tippy

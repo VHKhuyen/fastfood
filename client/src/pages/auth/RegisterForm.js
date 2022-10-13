@@ -1,12 +1,15 @@
-import { Button } from '@/components'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, Navigate } from 'react-router-dom'
 import style from './auth.module.scss'
 import classNames from 'classnames/bind'
 import FormInput from '@/components/formInput'
-import { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
-import { useStore } from '@/hooks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { Button } from '@/components'
+import { registerUser } from '@/services/authServices'
+import { registerSuccess } from '@/redux/authSlice'
+
 import config from '@/config'
 import images from '@/assets/images'
 
@@ -14,9 +17,11 @@ const cx = classNames.bind(style)
 
 function RegisterForm() {
 	let body
-	const {
-		stateAuth: { registerUser, isAuthenticated, authLoading },
-	} = useStore()
+
+	const auth = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
+	const { isAuthenticated, authLoading } = auth
+
 	const [loadSubmit, setLoadSubmit] = useState(false)
 	const [message, setMessage] = useState({ error: false, message: '' })
 
@@ -55,14 +60,14 @@ function RegisterForm() {
 	]
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		try {
-			setLoadSubmit(true)
-			const response = await registerUser(valueForm)
-			setLoadSubmit(false)
-			if (!response.success) {
-				setMessage({ error: true, message: response.message })
-			}
-		} catch (error) {}
+		setLoadSubmit(true)
+		const response = await registerUser(valueForm)
+		setLoadSubmit(false)
+		if (response?.success) {
+			dispatch(registerSuccess())
+		} else {
+			setMessage({ error: true, message: response.message })
+		}
 	}
 
 	const handleOnChange = (e) => {

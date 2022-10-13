@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-
-import { Button } from '@/components'
-import style from './auth.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames/bind'
-import FormInput from '@/components/formInput'
-import { useStore } from '@/hooks'
-import config from '@/config'
+import style from './auth.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+
+import { Button } from '@/components'
+import FormInput from '@/components/formInput'
+import config from '@/config'
 import images from '@/assets/images'
+import { loadUserSuccess, loginSuccess, loadUserFailed } from '@/redux/authSlice'
+import { loadUser, loginUser } from '@/services/authServices'
 
 const cx = classNames.bind(style)
 
@@ -21,9 +23,9 @@ function LoginForm() {
 	})
 	const [loadSubmit, setLoadSubmit] = useState(false)
 	const [message, setMessage] = useState({ error: false, message: '' })
-	const {
-		stateAuth: { loginUser, isAuthenticated, authLoading },
-	} = useStore()
+
+	const auth = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
 
 	const inputs = [
 		{
@@ -44,27 +46,39 @@ function LoginForm() {
 			pattern: '[0-9a-zA-Z]{6,}',
 		},
 	]
-	const handleSubmit = async (e) => {
-		e.preventDefault()
-		try {
-			setLoadSubmit(true)
-			const response = await loginUser(valueForm)
-			setLoadSubmit(false)
-
-			if (!response.success) {
-				setMessage({ error: true, message: response.message })
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
 
 	const handleOnChange = (e) => {
 		setValueForm({ ...valueForm, [e.target.name]: e.target.value })
 	}
-	if (authLoading) {
+
+	useEffect(() => {
+		const checkUser = async () => {
+			const response = await loadUser()
+			if (response?.success) {
+				dispatch(loadUserSuccess())
+			} else {
+				dispatch(loadUserFailed())
+			}
+		}
+		checkUser()
+	}, [])
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		setLoadSubmit(true)
+		const response = await loginUser(valueForm)
+		if (response.success) {
+			console.log(response)
+			dispatch(loginSuccess())
+		} else {
+			setMessage({ error: true, message: response.message })
+		}
+		setLoadSubmit(false)
+	}
+
+	if (auth.authLoading) {
 		body = <h1>Loading...</h1>
-	} else if (isAuthenticated) {
+	} else if (auth.isAuthenticated) {
 		body = <Navigate to={config.routes.home} />
 	} else {
 		body = (
