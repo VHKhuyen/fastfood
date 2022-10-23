@@ -7,10 +7,12 @@
 	--second-color: #00a149;
 	--white-color: #fff;
 	--title-color: #1e1d23;
-	--text-color: #808080;
+	--text-color: #142f43;
+	--light-color: #999999;
 	--border-color: #e5e5e5;
 	--norican-font: 'Norican', sans-serif;
 	--width-sidebar: 96px;
+	--width-section: 1280px;
 }
 * {
 	margin: 0;
@@ -28,6 +30,10 @@ body {
 	text-rendering: optimizespeed;
 	color: var(--text-color);
 	overflow-y: overlay;
+}
+section {
+	max-width: var(--width-section);
+	margin: auto;
 }
 h1,
 h2,
@@ -78,4 +84,41 @@ html *::-webkit-scrollbar-track {
 	cursor: default;
 	border-bottom-color: var(--primary-color) !important;
 	font-weight: 600 !important;
+}
+.slick-list {
+	overflow: hidden;
+}
+.slick-dots {
+	bottom: 12px;
+}
+.slick-dots li button {
+}
+.slick-dots li button:before {
+	font-size: 12px;
+	opacity: 0.5;
+	color: #fff;
+}
+.slick-dots li.slick-active button:before {
+	color: #fff;
+	opacity: 1;
+}
+.slick-prev {
+	left: 0;
+}
+.slick-next {
+	right: 0;
+}
+.slick-prev,
+.slick-next {
+	z-index: 1;
+	position: absolute;
+	top: 50%;
+	width: 30px;
+	height: 30px;
+	transform: translate(0, -50%);
+	cursor: pointer;
+}
+.slick-prev:before,
+.slick-next:before {
+	font-size: 28px;
 }

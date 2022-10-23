@@ -68,10 +68,13 @@ function LoginForm() {
 		setLoadSubmit(true)
 		const response = await loginUser(valueForm)
 		if (response.success) {
-			console.log(response)
 			dispatch(loginSuccess())
 		} else {
-			setMessage({ error: true, message: response.message })
+			if (response.message === 'Network Error') {
+				setMessage({ error: true, message: 'Không thể kết nối tới máy chủ!' })
+			} else {
+				setMessage({ error: true, message: response.message })
+			}
 		}
 		setLoadSubmit(false)
 	}

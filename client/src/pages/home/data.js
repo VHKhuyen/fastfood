@@ -5,18 +5,16 @@ export const homeSliderData = [
 		id: 1,
 		title: 'AMERICAN BURGER',
 		category: 'Burger thịt bò',
-		image: images.homeSlider1,
+		image: images.slider1,
 	},
 	{
 		id: 2,
 		title: 'AMERICAN BURGER',
 		category: 'Burger thịt bò',
-		image: images.homeSlider1,
+		image: images.slider2,
 	},
 	{
 		id: 3,
-		title: 'AMERICAN BURGER',
-		category: 'Burger gà',
-		image: images.homeSlider2,
+		image: images.slider2,
 	},
 ]

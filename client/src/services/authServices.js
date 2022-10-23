@@ -8,14 +8,14 @@ const loadUser = async () => {
 	const token = localStorage[LOCAL_STORAGE_TOKEN_NAME]
 	if (token) {
 		setAuthToKen(token)
-	}
-	try {
-		const response = await requestFastFood.get('/auth')
-		return response.data
-	} catch (error) {
-		localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-		setAuthToKen(null)
-		return error.response.data
+		try {
+			const response = await requestFastFood.get('/auth')
+			return response.data
+		} catch (error) {
+			localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+			setAuthToKen(null)
+			return error.response.data
+		}
 	}
 }
 
@@ -46,8 +46,9 @@ const loginUser = async (userForm) => {
 			return response.data
 		}
 	} catch (error) {
-		if (error.response.data) return error.response.data
-		else return { success: false, message: error.message }
+		if (error.response.data) {
+			return error.response.data
+		} else return { success: false, message: error.message }
 	}
 }
 const logoutUser = () => {

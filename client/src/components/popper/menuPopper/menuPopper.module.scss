@@ -1,15 +1,17 @@
-.menu-list{
-    width: 224px;
+.menu-list {
+	width: 224px;
 
-    ul {
-        padding: 5px 15px;
-    }
-    li{
-        padding:10px 0;
-        color: rgb(102 102 102/1);
-
-    }
-    a:hover{
-        color: rgb(41 41 41/1);
-    }
+	ul {
+		padding: 5px 15px;
+	}
+	li {
+		color: rgb(102 102 102/1);
+		a {
+			padding: 10px 0;
+			display: block;
+		}
+		a:hover {
+			color: rgb(41 41 41/1);
+		}
+	}
 }

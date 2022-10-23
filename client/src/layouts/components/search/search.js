@@ -113,6 +113,7 @@ function Search() {
 							onFocus={handleFocus}
 							onChange={handleChange}
 							placeholder="Tìm kiếm sản phẩm, bài viết,..."
+							autoComplete="off"
 						/>
 						<button className={cx('loading', { show: showLoading })}>
 							<FontAwesomeIcon icon={faSpinner} />

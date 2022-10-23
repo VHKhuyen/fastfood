@@ -7,8 +7,10 @@ function Slide(props) {
 	return (
 		<div className={cx('wrapper')}>
 			<img src={image} alt="Home Slider" />
-			<h1>{title}</h1>
-			<p>{category}</p>
+			<div className={cx('content')}>
+				<h1>{title}</h1>
+				<p>{category}</p>
+			</div>
 		</div>
 	)
 }

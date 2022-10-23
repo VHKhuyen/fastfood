@@ -1,0 +1,86 @@
+.container {
+	background: #fff9e9;
+	padding: 0 28px;
+	padding-top: 68px;
+	> div {
+		max-width: var(--width-section);
+		margin: auto;
+		font-size: 1.4rem;
+	}
+}
+.license {
+	background: #ffce4e;
+}
+.content {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	padding-bottom: 48px;
+
+	li {
+		margin-bottom: 8px;
+	}
+	li.icon {
+		a {
+			padding-left: 30px;
+		}
+	}
+	.icon.fb {
+		a {
+			background: url(../../assets/images/icon-fb.svg) 0 1px no-repeat;
+		}
+	}
+	.icon.ins {
+		a {
+			background: url(../../assets/images/icon-instagram.svg) 0 1px no-repeat;
+		}
+	}
+	.icon.zalo {
+		a {
+			background: url(../../assets/images/icon-zalo.svg) 0 1px no-repeat;
+		}
+	}
+	img {
+		height: 28px;
+	}
+	h2 {
+		font-size: 1.8rem;
+		font-weight: 600;
+		margin: 16px 0;
+	}
+	div > a {
+		cursor: pointer;
+		display: block;
+		margin-bottom: 16px;
+	}
+	a {
+		transition: all 0.3s;
+		cursor: pointer;
+		&:hover {
+			color: var(--primary-color);
+		}
+	}
+}
+.trace-mark {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 16px 0;
+	span {
+		margin-right: 16px;
+	}
+	.brand {
+		font-size: 1.6rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+}
+@media screen and (max-width: 850px) {
+	.trace-mark {
+		.container {
+			justify-content: center;
+		}
+	}
+}

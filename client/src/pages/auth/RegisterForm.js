@@ -66,7 +66,11 @@ function RegisterForm() {
 		if (response?.success) {
 			dispatch(registerSuccess())
 		} else {
-			setMessage({ error: true, message: response.message })
+			if (response.message === 'Network Error') {
+				setMessage({ error: true, message: 'Không thể kết nối tới máy chủ!' })
+			} else {
+				setMessage({ error: true, message: response.message })
+			}
 		}
 	}
 

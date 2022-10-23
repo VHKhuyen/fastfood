@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons'
@@ -26,41 +26,43 @@ function Header() {
 
 	return (
 		<div className={cx('wrapper')}>
-			<div className={cx('logo')}>
-				<Link to={config.routes.home}>
-					<img src={images.logo} alt="logo" />
-				</Link>
-			</div>
-			<Sidebar />
-			<div className={cx('actions')}>
-				<Search />
-				<div className={cx('wishlist')}>
-					<Tippy content="Yêu thích">
-						<NavLink to={config.routes.wishlist} className={navLinkClass}>
-							<FontAwesomeIcon icon={faHeart} />
-							<span className={cx('count')}>0</span>
-						</NavLink>
-					</Tippy>
+			<div className={cx('container')}>
+				<div className={cx('logo')}>
+					<a href="">
+						<img src={images.logo} alt="logo" />
+					</a>
 				</div>
-				<div className={cx('cart')}>
-					<Tippy content="Giỏ hàng">
-						<NavLink to={config.routes.cart} className={navLinkClass}>
-							<FontAwesomeIcon icon={faCartShopping} />
-							<span className={cx('count')}>0</span>
-						</NavLink>
-					</Tippy>
+				<Sidebar />
+				<div className={cx('actions')}>
+					<Search />
+					<div className={cx('wishlist')}>
+						<Tippy content="Yêu thích">
+							<NavLink to={config.routes.wishlist} className={navLinkClass}>
+								<FontAwesomeIcon icon={faHeart} />
+								<span className={cx('count')}>0</span>
+							</NavLink>
+						</Tippy>
+					</div>
+					<div className={cx('cart')}>
+						<Tippy content="Giỏ hàng">
+							<NavLink to={config.routes.cart} className={navLinkClass}>
+								<FontAwesomeIcon icon={faCartShopping} />
+								<span className={cx('count')}>0</span>
+							</NavLink>
+						</Tippy>
+					</div>
+					{isAuthenticated ? (
+						<>
+							<MenuPopper>
+								<Image className={cx('user-avatar')} alt="Avatar" />
+							</MenuPopper>
+						</>
+					) : (
+						<Button to={config.routes.login} primary small>
+							Đăng nhập
+						</Button>
+					)}
 				</div>
-				{isAuthenticated ? (
-					<>
-						<MenuPopper>
-							<Image className={cx('user-avatar')} alt="Avatar" />
-						</MenuPopper>
-					</>
-				) : (
-					<Button to={config.routes.login} primary small>
-						Đăng nhập
-					</Button>
-				)}
 			</div>
 		</div>
 	)

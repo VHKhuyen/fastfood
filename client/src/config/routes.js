@@ -11,6 +11,6 @@ const routes = {
 	upload: '/upload',
 	login: '/login',
 	register: '/register',
-	product: '/product/:id',
+	product: '/product/:nickname',
 }
 export default routes
