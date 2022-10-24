@@ -21,7 +21,7 @@ function Footer() {
 								<li>
 									Email: <a href="mailto:vhkhuyen1810@gmail.com">vhkhuyen1810@gmail.com</a>
 								</li>
-								<li>Địa chỉ: 66 Xuân Thủy, Cầu Giấy Hà Nội</li>
+								<li>Địa chỉ: 66 Abc Xyz, Cầu Giấy, Hà Nội</li>
 							</ul>
 						</div>
 						<div>
