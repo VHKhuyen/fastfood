@@ -17,6 +17,7 @@ function Button({
 	large = false,
 	small = false,
 	width100 = false,
+	noRadius = false,
 	active = false,
 	className,
 	...passProps
@@ -50,6 +51,7 @@ function Button({
 		width100,
 		active,
 		disable,
+		noRadius,
 		[className]: className,
 	})
 	return (
@@ -71,6 +73,7 @@ Button.propTypes = {
 	small: PropTypes.bool,
 	width100: PropTypes.bool,
 	active: PropTypes.bool,
+	noRadius: PropTypes.bool,
 	className: PropTypes.string,
 }
 export default Button

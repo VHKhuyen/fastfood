@@ -1,0 +1,27 @@
+.wrapper {
+	.field-img {
+		width: 60px;
+		margin-right: 15px;
+		float: left;
+	}
+	.info {
+		.field-name {
+			a {
+				color: var(--title-color);
+				font-weight: 500;
+				font-size: 1.6rem;
+			}
+		}
+	}
+	button {
+		width: 20px;
+		height: 20px;
+		display: block;
+		float: right;
+		margin-left: 10px;
+		cursor: pointer;
+		border: 0;
+		background-color: transparent;
+		font-size: 1.8rem;
+	}
+}

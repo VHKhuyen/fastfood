@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames/bind'
 import style from './header.module.scss'
 
@@ -11,10 +11,8 @@ import MenuPopper from '@/components/popper/menuPopper'
 import Image from '@/components/image'
 import Search from '../search/search'
 import Sidebar from '../sidebar/Sidebar'
-import Tippy from '@tippyjs/react'
-import 'tippy.js/dist/tippy.css'
 import config from '@/config'
-
+import Cart from '../cart/Cart'
 const cx = classNames.bind(style)
 
 function Header() {
@@ -28,7 +26,7 @@ function Header() {
 		<div className={cx('wrapper')}>
 			<div className={cx('container')}>
 				<div className={cx('logo')}>
-					<a href="">
+					<a href="/">
 						<img src={images.logo} alt="logo" />
 					</a>
 				</div>
@@ -36,21 +34,12 @@ function Header() {
 				<div className={cx('actions')}>
 					<Search />
 					<div className={cx('wishlist')}>
-						<Tippy content="Yêu thích">
-							<NavLink to={config.routes.wishlist} className={navLinkClass}>
-								<FontAwesomeIcon icon={faHeart} />
-								<span className={cx('count')}>0</span>
-							</NavLink>
-						</Tippy>
+						<a>
+							<FontAwesomeIcon icon={faHeart} />
+							<span className={cx('count')}>0</span>
+						</a>
 					</div>
-					<div className={cx('cart')}>
-						<Tippy content="Giỏ hàng">
-							<NavLink to={config.routes.cart} className={navLinkClass}>
-								<FontAwesomeIcon icon={faCartShopping} />
-								<span className={cx('count')}>0</span>
-							</NavLink>
-						</Tippy>
-					</div>
+					<Cart />
 					{isAuthenticated ? (
 						<>
 							<MenuPopper>

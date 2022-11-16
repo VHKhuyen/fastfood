@@ -12,7 +12,7 @@ class AuthController {
       res.json({ success: true, user });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ success: false, message: "internal server" });
+      res.status(500).json({ success: false, message: "Máy chủ lỗi!" });
     }
   }
 
@@ -51,7 +51,7 @@ class AuthController {
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ success: false, message: "internal server" });
+      res.status(500).json({ success: false, message: "Máy chủ lỗi!" });
     }
   }
 
@@ -62,7 +62,7 @@ class AuthController {
     if (!username || !password) {
       return res
         .status(400)
-        .json({ success: false, message: "missing username and/or password" });
+        .json({ success: false, message: "Thiếu mật khẩu hoặc tài khoản!" });
     }
     try {
       //check for existing user
@@ -70,14 +70,20 @@ class AuthController {
       if (!user) {
         return res
           .status(400)
-          .json({ success: false, message: "incorrect username or password" });
+          .json({
+            success: false,
+            message: "Tên đăng nhập hoặc mật khẩu sai!",
+          });
       }
       //username found
       const passwordValid = await argon2.verify(user.password, password);
       if (!passwordValid) {
         return res
           .status(400)
-          .json({ success: false, message: "incorrect username or password" });
+          .json({
+            success: false,
+            message: "Tên đăng nhập hoặc mật khẩu sai!",
+          });
       }
       //all good
       //return token
@@ -92,7 +98,7 @@ class AuthController {
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ success: false, message: "internal server" });
+      res.status(500).json({ success: false, message: "Máy chủ lỗi!" });
     }
   }
 }

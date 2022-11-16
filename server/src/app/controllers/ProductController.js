@@ -1,62 +1,105 @@
-const argon2 = require('argon2')
-const jwt = require('jsonwebtoken')
-const User = require('../models/User')
-class AuthController {
+const Product = require("../models/Product");
 
-    //route POST auth/register
-    async register(req, res) {
-        const { username, password } = req.body
-
-        if (!username || !password) {
-            return res.status(400).json({ success: false, message: 'missing username and/or password' });
-        }
-        try {
-            //check for existing user
-            const user = await User.findOne({ username })
-            if (user)
-                return res.status(400).json({ success: false, message: ' username already register taken' })
-
-            const hashPassword = await argon2.hash(password)
-            const newUser = new User({ username, password: hashPassword })
-
-            await newUser.save()
-
-            //return token
-            const accessToken = jwt.sign({ userId: newUser._id }, process.env.ACCESS_TOKEN_SECRET)
-            res.json({ success: true, message: "user created successfully", accessToken })
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({ success: false, message: "internal server" })
-        }
+class ProductController {
+  async index(req, res) {
+    try {
+      const posts = await Product.find();
+      res.json({ success: true, posts });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "internal server" });
     }
+  }
 
-    //router auth/login
-    async login(req, res) {
-        const { username, password } = req.body
+  async create(req, res) {
+    const { name, description, price, image, category } = req.body;
 
-        if (!username || !password) {
-            return res.status(400).json({ success: false, message: 'missing username and/or password' });
-        }
-        try {
-            //check for existing user
-            const user = await User.findOne({ username })
-            if (!user) {
-                return res.status(400).json({ success: false, message: 'incorrect username or password' });
-            }
-            //username found
-            const passwordValid = await argon2.verify(user.password, password)
-            if (!passwordValid) {
-                return res.status(400).json({ success: false, message: 'incorrect username or password' });
-            }
-            //all good
-            //return token
-            const accessToken = jwt.sign({ userId: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET)
-            res.json({ success: true, message: "user login successfully", accessToken })
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({ success: false, message: "internal server" })
-        }
+    //Simple validation
+    if (!name || !category || !image || !price) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provides enough information!",
+      });
     }
+    try {
+      const newPost = new Product({
+        category,
+        name,
+        description,
+        price,
+        image,
+      });
+
+      await newPost.save();
+      return res.json({
+        success: true,
+        message: "Product create successfully!",
+        newPost,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "internal server" });
+    }
+  }
+
+  async update(req, res) {
+    const { name, description, price, image, category } = req.body;
+
+    //Simple validation
+    if (!name || !category || !image || !price) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provides enough information!",
+      });
+    }
+    try {
+      const updateProduct = new Product({
+        category,
+        name,
+        description,
+        price,
+        image,
+      });
+
+      const ProductUpdateCondition = { _id: req.params.id, userId: req.userId };
+
+      updateProduct = await Post.findOneAndUpdate(
+        ProductUpdateCondition,
+        updateProduct
+      );
+      if (!updateProduct) {
+        res.status(401).json({
+          success: false,
+          message: "product not found or user not authenticated ",
+        });
+      }
+      res.json({ success: true, message: "product updated", updateProduct });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "internal server" });
+    }
+  }
+
+  async delete(req, res) {
+    try {
+      const ProductUpdateCondition = { _id: req.params.id, userId: req.userId };
+      const deleteProduct = await Post.findOneAndDelete(ProductUpdateCondition);
+      if (!deleteProduct) {
+        res.status(401).json({
+          success: false,
+          message: "Product not found or user not authenticated",
+        });
+      }
+      res.json({
+        success: true,
+        message: "Product deleted successfully",
+        deleteProduct,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "internal server" });
+    }
+  }
 }
 
-module.exports = new AuthController();
+module.exports = new ProductController();

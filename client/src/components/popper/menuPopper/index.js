@@ -14,6 +14,7 @@ function MenuPopper({ children, hideOnClick = false }) {
 	return (
 		<Tippy
 			interactive
+			trigger="click"
 			hideOnClick={hideOnClick}
 			placement="bottom-end"
 			render={(attrs) => (
