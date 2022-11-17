@@ -36,9 +36,9 @@ function Home() {
 						<Button primary radius>
 							Pizza
 						</Button>
-						<Button radius>Sushi</Button>
-						<Button radius>Salats</Button>
 						<Button radius>Burger</Button>
+						<Button radius>Mỳ ý</Button>
+						<Button radius>Đồ uống</Button>
 					</div>
 					<div className={cx('product-list')}>
 						<ProductItem />

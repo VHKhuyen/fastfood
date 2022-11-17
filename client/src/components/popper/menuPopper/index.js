@@ -4,13 +4,20 @@ import classNames from 'classnames/bind'
 import style from './menuPopper.module.scss'
 import { Wrapper as PopperWrapper } from '@/components/popper'
 import { logoutUser } from '@/services/authServices'
-
+import { useDispatch } from 'react-redux'
+import { logout } from '@/redux/authSlice'
 const cx = classNames.bind(style)
 MenuPopper.propTypes = {
 	children: PropTypes.node.isRequired,
 }
 function MenuPopper({ children, hideOnClick = false }) {
-	const handleLogout = () => logoutUser()
+	const dispatch = useDispatch()
+
+	const handleLogout = (e) => {
+		e.preventDefault()
+		logoutUser()
+		dispatch(logout())
+	}
 	return (
 		<Tippy
 			interactive

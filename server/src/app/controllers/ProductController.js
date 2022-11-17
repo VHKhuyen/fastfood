@@ -3,8 +3,8 @@ const Product = require("../models/Product");
 class ProductController {
   async index(req, res) {
     try {
-      const posts = await Product.find();
-      res.json({ success: true, posts });
+      const products = await Product.find({});
+      res.json({ success: true, products });
     } catch (error) {
       console.log(error);
       res.status(500).json({ success: false, message: "internal server" });
@@ -13,7 +13,6 @@ class ProductController {
 
   async create(req, res) {
     const { name, description, price, image, category } = req.body;
-
     //Simple validation
     if (!name || !category || !image || !price) {
       return res.status(400).json({

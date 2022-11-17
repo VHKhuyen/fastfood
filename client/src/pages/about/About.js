@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './About.css'
 import { Button, TitlePage } from '../../components/index'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 function About() {
+	const isLoggedIn = useSelector((state) => state.auth.isAuthenticated)
+	const navigate = useNavigate()
+	useEffect(() => {
+		if (isLoggedIn) {
+			console.log(isLoggedIn)
+		} else {
+			console.log(isLoggedIn)
+			navigate('/')
+		}
+	}, [isLoggedIn])
 	return (
 		<div className="about">
 			<TitlePage title="About Us" icon="😋" />
@@ -12,8 +24,8 @@ function About() {
 							<span>Wellome!</span>Best burger ideas in the world
 						</h1>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-							ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+							dolore magna aliqua. Ut enim ad minim veniam.
 						</p>
 						<Button come="/contact">Contact Now</Button>
 					</div>
@@ -46,9 +58,8 @@ function About() {
 							<span>Our quality</span>chicken
 						</h2>
 						<p>
-							Quality is our #1 ingredient. That’s why our Chicken Wings, Chicken Bites and Grilled
-							Chicken Topping are made from chickens raised without antibiotics and fed an all
-							vegetable-grain diet.
+							Quality is our #1 ingredient. That’s why our Chicken Wings, Chicken Bites and Grilled Chicken Topping are
+							made from chickens raised without antibiotics and fed an all vegetable-grain diet.
 						</p>
 						<Button come="/contact">order now</Button>
 					</div>
@@ -62,9 +73,8 @@ function About() {
 							<span>Our quality</span>burger
 						</h2>
 						<p>
-							Quality is our #1 ingredient. That’s why our Chicken Wings, Chicken Bites and Grilled
-							Chicken Topping are made from chickens raised without antibiotics and fed an all
-							vegetable-grain diet.
+							Quality is our #1 ingredient. That’s why our Chicken Wings, Chicken Bites and Grilled Chicken Topping are
+							made from chickens raised without antibiotics and fed an all vegetable-grain diet.
 						</p>
 						<Button come="/contact">order now</Button>
 					</div>
@@ -79,9 +89,8 @@ function About() {
 							<span>Our quality</span>pizza douch
 						</h2>
 						<p>
-							Quality is our #1 ingredient. That’s why our Chicken Wings, Chicken Bites and Grilled
-							Chicken Topping are made from chickens raised without antibiotics and fed an all
-							vegetable-grain diet.
+							Quality is our #1 ingredient. That’s why our Chicken Wings, Chicken Bites and Grilled Chicken Topping are
+							made from chickens raised without antibiotics and fed an all vegetable-grain diet.
 						</p>
 						<Button come="/contact">order now</Button>
 					</div>

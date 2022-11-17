@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom'
+import config from '@/config'
 import classNames from 'classnames/bind'
 import style from './sidebar.module.scss'
-import config from '@/config'
+
 const cx = classNames.bind(style)
 
 const menus = [
@@ -33,17 +34,19 @@ const menus = [
 
 function Menu() {
 	return (
-		<ul className={cx('list')}>
-			{menus.map((menu, index) => {
-				return (
-					<li key={index}>
-						<NavLink to={menu.to} className={({ isActive }) => (isActive ? 'active' : '')}>
-							{menu.title}
-						</NavLink>
-					</li>
-				)
-			})}
-		</ul>
+		<div className={cx('wrapper')}>
+			<ul className={cx('list')}>
+				{menus.map((menu, index) => {
+					return (
+						<li key={index}>
+							<NavLink to={menu.to} className={({ isActive }) => (isActive ? 'active' : '')}>
+								{menu.title}
+							</NavLink>
+						</li>
+					)
+				})}
+			</ul>
+		</div>
 	)
 }
 
