@@ -2,7 +2,14 @@
 	padding: 40px 28px;
 	min-height: 300px;
 	padding-bottom: 40px;
-
+	.field-back {
+		margin-bottom: 20px;
+		text-align: right;
+		.btn-back {
+			color: var(--primary-color);
+			font-size: 1.6rem;
+		}
+	}
 	.product-detail {
 		justify-content: center;
 		display: flex;

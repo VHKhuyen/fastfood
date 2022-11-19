@@ -1,41 +1,62 @@
-import images from '@/assets/images'
-import { Button } from '@/components'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames/bind'
-import styles from './detail.module.scss'
 
+import { Button } from '@/components'
+import { getSingleProduct } from '@/services/productServices'
+import styles from './detail.module.scss'
 const cx = classNames.bind(styles)
+
 function Detail() {
+	const [product, setProduct] = useState({})
+
+	const location = useLocation()
+	const navigate = useNavigate()
+	const slug = location.pathname.split('/')[2]
+
+	useEffect(() => {
+		const singleProduct = async () => {
+			const response = await getSingleProduct(slug)
+			if (response?.success) {
+				setProduct(response.products)
+			} else {
+			}
+		}
+		singleProduct()
+	}, [])
+
 	return (
 		<section className={cx('wrapper')}>
-			<form>
-				<main className={cx('main')}>
-					<div className={cx('container')}>
-						<div className={cx('product-detail')}>
-							<div className={cx('field-back')}></div>
-							<div className={cx('field-img')}>
-								<div className={cx('item')}>
-									<img src={images.burger1} alt="image item" />
-								</div>
-								<div className={cx('field-top')}></div>
+			<main className={cx('main')}>
+				<div className={cx('container')}>
+					<div className={cx('field-back')}>
+						<Button onClick={() => navigate(-1)} className={cx('btn-back')} small radius title="Quay lại">
+							← Quay lại
+						</Button>
+					</div>
+					<div className={cx('product-detail')}>
+						<div className={cx('field-img')}>
+							<div className={cx('item')}>
+								<img src={product.image} alt="image item" />
 							</div>
-							<div className={cx('field-content')}>
-								<h3>Apricot Chicken</h3>
-								<p>
-									Thịt xông khói giòn, giăm bông thơm ngon, dứa, hành tây và phô mai mozzarella dẻo dai, kết thúc bằng
-									món sốt BBQ.
-								</p>
-								<div className={cx('field-price')}>129.000 ₫</div>
-								{/* <p className="discount-f">
+							<div className={cx('field-top')}></div>
+						</div>
+						<div className={cx('field-content')}>
+							<h3>{product.name}</h3>
+							<p>{product.description}</p>
+							<div className={cx('field-price')}>{product.price} ₫</div>
+							{/* <p className="discount-f">
 									<span className="price-old">184.000 ₫</span>
 								</p> */}
-								{/* <div className="field-note">
+							{/* <div className="field-note">
 									<span className="field-text">
-										<p>02&nbsp;Gà Rán 1 Miếng</p>
-										<p>02&nbsp;Mì Ý&nbsp;&nbsp;</p>
-										<p>01&nbsp;Khoai Tây Chiên (M)</p>
-										<p>02&nbsp;Pepsi (M)</p>
+									<p>02&nbsp;Gà Rán 1 Miếng</p>
+									<p>02&nbsp;Mì Ý&nbsp;&nbsp;</p>
+									<p>01&nbsp;Khoai Tây Chiên (M)</p>
+									<p>02&nbsp;Pepsi (M)</p>
 									</span>
 								</div> */}
+							<form>
 								<div className={cx('cart')}>
 									<div className={cx('inner')}>
 										<div className={cx('qty')}>
@@ -58,11 +79,11 @@ function Detail() {
 										</Button>
 									</div>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
-				</main>
-			</form>
+				</div>
+			</main>
 		</section>
 	)
 }

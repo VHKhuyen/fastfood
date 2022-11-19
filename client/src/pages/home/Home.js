@@ -45,14 +45,14 @@ function Home() {
 		prevArrow: <PrevArrow />,
 	}
 	useEffect(() => {
-		const checkUser = async () => {
+		const products = async () => {
 			const response = await getProducts(typeTab)
 			if (response?.success) {
 				setProductList(response.products)
 			} else {
 			}
 		}
-		checkUser()
+		products()
 	}, [typeTab])
 
 	return (
@@ -82,11 +82,11 @@ function Home() {
 							if (product.category === typeTab) return <ProductItem key={product._id} product={product} />
 						})}
 					</div>
-					<div className={cx('view-all')}>
+					{/* <div className={cx('view-all')}>
 						<Button primary large>
 							Xem tất cả
 						</Button>
-					</div>
+					</div> */}
 				</div>
 			</section>
 		</div>

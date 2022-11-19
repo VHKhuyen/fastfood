@@ -12,4 +12,17 @@ const getProducts = async (type) => {
 		} else return { success: false, message: error.message }
 	}
 }
-export { getProducts }
+
+const getSingleProduct = async (slug) => {
+	try {
+		const response = await requestFastFood.get(`/api/v1/products/${slug}`)
+		if (response.data.success) {
+			return response.data
+		}
+	} catch (error) {
+		if (error.response.data) {
+			return error.response.data
+		} else return { success: false, message: error.message }
+	}
+}
+export { getProducts, getSingleProduct }
