@@ -11,13 +11,13 @@ function ProductCart() {
 				<FontAwesomeIcon icon={faTrashCan} />
 			</button>
 			<div className={cx('field-img')}>
-				<a href="">
+				<a href="/">
 					<img src={images.combo149} alt="burger" />
 				</a>
 			</div>
 			<div className={cx('info')}>
 				<div className={cx('field-name')}>
-					<a href="">Combo Pokémon 2</a>
+					<a href="/">Combo Pokémon 2</a>
 				</div>
 				<div className={cx('price')}>
 					<span>169</span>

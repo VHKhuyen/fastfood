@@ -1,4 +1,4 @@
-import { Home, Menu, About, Contact, Upload, LoginForm, RegisterForm } from '@/pages/index'
+import { Home, Menu, About, Contact, Upload, LoginForm, RegisterForm, Detail } from '@/pages/index'
 import config from '@/config'
 
 const publicRoutes = [
@@ -12,6 +12,7 @@ const publicRoutes = [
 	{ path: config.routes.cart, component: Contact },
 	{ path: config.routes.user, component: Contact },
 	{ path: config.routes.upload, component: Upload },
+	{ path: config.routes.product, component: Detail },
 	{ path: config.routes.register, component: RegisterForm, layout: null },
 	{ path: config.routes.login, component: LoginForm, layout: null },
 ]

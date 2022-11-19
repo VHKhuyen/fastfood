@@ -4,7 +4,7 @@ const verifyToken = require("../middleware/auth");
 const ProductController = require("../app/controllers/ProductController");
 
 router
-  .get("/", ProductController.index)
+  .get("/new", ProductController.index)
   .post("/", verifyToken, ProductController.create);
 router
   .delete("/:id", verifyToken, ProductController.delete)

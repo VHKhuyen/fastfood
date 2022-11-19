@@ -1,6 +1,5 @@
 export { default as Button } from './button/Button'
 export { default as CartItem } from './cartitem/CartItem'
-export { default as Detail } from './detail/Detail'
 export { default as Footer } from './footer/Footer'
 export { default as HomeCategory } from './homecategory/HomeCategory'
 export { default as InfoHeader } from './infoheader/InfoHeader'

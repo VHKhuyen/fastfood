@@ -7,10 +7,32 @@ import ProductItem from '@/components/productItem/ProductItem'
 import { Button } from '@/components'
 import { homeSliderData } from './data'
 import { Slide, PrevArrow, NextArrow } from '@/components/slider'
-
+import { useEffect, useState } from 'react'
+import { getProducts } from '@/services/productServices'
 const cx = classNames.bind(style)
 
+const tabs = [
+	// {
+	// 	type: 'new',
+	// 	title: 'Mới nhất',
+	// },
+	{
+		type: 'burger',
+		title: 'burger',
+	},
+	{
+		type: 'pasta',
+		title: 'Mỳ ý',
+	},
+	{
+		type: 'drink',
+		title: 'Đồ uống',
+	},
+]
+
 function Home() {
+	const [productList, setProductList] = useState([])
+	const [typeTab, setTypeTab] = useState('burger')
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -22,6 +44,17 @@ function Home() {
 		nextArrow: <NextArrow />,
 		prevArrow: <PrevArrow />,
 	}
+	useEffect(() => {
+		const checkUser = async () => {
+			const response = await getProducts(typeTab)
+			if (response?.success) {
+				setProductList(response.products)
+			} else {
+			}
+		}
+		checkUser()
+	}, [typeTab])
+
 	return (
 		<div className={cx('wrapper')}>
 			<Slider {...settings}>
@@ -33,19 +66,21 @@ function Home() {
 				<div className={cx('popular-dishes')}>
 					<h2>Danh mục phổ biến</h2>
 					<div className={cx('tabs-wrapper')}>
-						<Button primary radius>
-							Pizza
-						</Button>
-						<Button radius>Burger</Button>
-						<Button radius>Mỳ ý</Button>
-						<Button radius>Đồ uống</Button>
+						{tabs.map((tab) => (
+							<Button
+								key={tab.type}
+								primary={typeTab === tab.type ? true : false}
+								radius
+								onClick={() => setTypeTab(tab.type)}
+							>
+								{tab.title}
+							</Button>
+						))}
 					</div>
 					<div className={cx('product-list')}>
-						<ProductItem />
-						<ProductItem />
-						<ProductItem />
-						<ProductItem />
-						<ProductItem />
+						{productList.map((product) => {
+							if (product.category === typeTab) return <ProductItem key={product._id} product={product} />
+						})}
 					</div>
 					<div className={cx('view-all')}>
 						<Button primary large>

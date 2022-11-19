@@ -16,7 +16,7 @@ function App() {
 			}
 		}
 		checkUser()
-	}, [])
+	}, [dispatch])
 	return (
 		<Router>
 			<div className="app">

@@ -16,7 +16,10 @@ function Cart() {
 	const refCart = useRef(null)
 
 	const hide = () => setVisible(false)
-
+	const handleVisible = (e) => {
+		e.preventDefault()
+		setVisible(!visible)
+	}
 	return (
 		<div ref={refCart} className={cx('cart')}>
 			<HeadlessTippy
@@ -53,7 +56,7 @@ function Cart() {
 				)}
 				onClickOutside={hide}
 			>
-				<a onClick={() => setVisible(!visible)}>
+				<a href="/" onClick={handleVisible}>
 					<FontAwesomeIcon icon={faCartShopping} />
 					<span className={cx('count')}>0</span>
 				</a>

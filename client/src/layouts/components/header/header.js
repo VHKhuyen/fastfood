@@ -17,7 +17,9 @@ const cx = classNames.bind(style)
 function Header() {
 	const auth = useSelector((state) => state.auth)
 	const { isAuthenticated } = auth
-
+	const handleWishlist = (e) => {
+		e.preventDefault()
+	}
 	return (
 		<div className={cx('wrapper')}>
 			<div className={cx('container')}>
@@ -30,7 +32,7 @@ function Header() {
 				<div className={cx('actions')}>
 					<Search />
 					<div className={cx('wishlist')}>
-						<a>
+						<a href="/" onClick={handleWishlist}>
 							<FontAwesomeIcon icon={faHeart} />
 							<span className={cx('count')}>0</span>
 						</a>
