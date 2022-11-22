@@ -2,7 +2,7 @@ import { requestFastFood } from '@/utils/httpRequest'
 
 const getProducts = async (type) => {
 	try {
-		const response = await requestFastFood.get(`/api/v1/products/new`)
+		const response = await requestFastFood.get(`/api/v1/products/${type}`)
 		if (response.data.success) {
 			return response.data
 		}

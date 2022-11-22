@@ -1,6 +1,16 @@
 const Product = require("../models/Product");
 
 class ProductController {
+  async getProducts(req, res) {
+    const category = req.url.split("/")[1];
+    try {
+      const products = await Product.find({ category: category });
+      res.json({ success: true, products });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "internal server" });
+    }
+  }
   async getAllProducts(req, res) {
     try {
       const products = await Product.find({});

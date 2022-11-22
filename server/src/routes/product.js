@@ -5,6 +5,9 @@ const ProductController = require("../app/controllers/ProductController");
 
 router
   .get("/new", ProductController.getAllProducts)
+  .get("/burger", ProductController.getProducts)
+  .get("/pasta", ProductController.getProducts)
+  .get("/drink", ProductController.getProducts)
   .get("/:slug", ProductController.getSingleProduct)
   .post("/", verifyToken, ProductController.create);
 router

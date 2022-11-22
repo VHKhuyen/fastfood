@@ -12,10 +12,10 @@ import { getProducts } from '@/services/productServices'
 const cx = classNames.bind(style)
 
 const tabs = [
-	// {
-	// 	type: 'new',
-	// 	title: 'Mới nhất',
-	// },
+	{
+		type: 'new',
+		title: 'Mới nhất',
+	},
 	{
 		type: 'burger',
 		title: 'burger',
@@ -32,7 +32,7 @@ const tabs = [
 
 function Home() {
 	const [productList, setProductList] = useState([])
-	const [typeTab, setTypeTab] = useState('burger')
+	const [typeTab, setTypeTab] = useState('new')
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -78,9 +78,9 @@ function Home() {
 						))}
 					</div>
 					<div className={cx('product-list')}>
-						{productList.map((product) => {
-							if (product.category === typeTab) return <ProductItem key={product._id} product={product} />
-						})}
+						{productList.map((product) => (
+							<ProductItem key={product._id} product={product} />
+						))}
 					</div>
 					{/* <div className={cx('view-all')}>
 						<Button primary large>
