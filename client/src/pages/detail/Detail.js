@@ -3,12 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames/bind'
 
 import { Button } from '@/components'
-import { getSingleProduct } from '@/services/productServices'
+import { getProducts, getSingleProduct } from '@/services/productServices'
 import styles from './detail.module.scss'
+import { ProductList, ProductItem } from '@/components'
 const cx = classNames.bind(styles)
 
 function Detail() {
 	const [product, setProduct] = useState({})
+	const [productList, setProductList] = useState([])
 
 	const location = useLocation()
 	const navigate = useNavigate()
@@ -22,8 +24,21 @@ function Detail() {
 			} else {
 			}
 		}
+
 		singleProduct()
-	}, [])
+	}, [slug])
+
+	useEffect(() => {
+		const products = async () => {
+			const response = await getProducts(product.category)
+			if (response?.success) {
+				setProductList(response.products)
+			} else {
+			}
+		}
+
+		products()
+	})
 
 	return (
 		<section className={cx('wrapper')}>
@@ -37,7 +52,7 @@ function Detail() {
 					<div className={cx('product-detail')}>
 						<div className={cx('field-img')}>
 							<div className={cx('item')}>
-								<img src={product.image} alt="image item" />
+								<img src={product.image} alt="item" />
 							</div>
 							<div className={cx('field-top')}></div>
 						</div>
@@ -48,14 +63,35 @@ function Detail() {
 							{/* <p className="discount-f">
 									<span className="price-old">184.000 ₫</span>
 								</p> */}
-							{/* <div className="field-note">
-									<span className="field-text">
-									<p>02&nbsp;Gà Rán 1 Miếng</p>
-									<p>02&nbsp;Mì Ý&nbsp;&nbsp;</p>
-									<p>01&nbsp;Khoai Tây Chiên (M)</p>
-									<p>02&nbsp;Pepsi (M)</p>
-									</span>
-								</div> */}
+							{/* <div class="options-product">
+								<div class="headline">
+									<h4>Ngon hơn khi ăn kèm</h4>
+								</div>
+								<ul class="list-options">
+									<li class="checked">
+										<div class="product-name">
+											<span class="txt">Phô Mai Miếng</span>
+										</div>
+										<div class="r-info">
+											<div class="inner">
+												<span class="price">+ 5.000 ₫</span>
+												<button type="button" class="btn-remove"></button>
+											</div>
+										</div>
+									</li>
+									<li class="checked">
+										<div class="product-name">
+											<span class="txt">Trứng</span>
+										</div>
+										<div class="r-info">
+											<div class="inner">
+												<span class="price">+ 7.000 ₫</span>
+												<button type="button" class="btn-remove"></button>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div> */}
 							<form>
 								<div className={cx('cart')}>
 									<div className={cx('inner')}>
@@ -81,6 +117,17 @@ function Detail() {
 								</div>
 							</form>
 						</div>
+					</div>
+					<div className={cx('field-related')}>
+						<h2>Sản phẩm liên quan</h2>
+						<ProductList>
+							{productList &&
+								productList.map((product) => {
+									if (product.slug === slug) {
+										return
+									} else return <ProductItem key={product._id} product={product} />
+								})}
+						</ProductList>
 					</div>
 				</div>
 			</main>

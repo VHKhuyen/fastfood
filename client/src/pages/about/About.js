@@ -13,7 +13,7 @@ function About() {
 			console.log(isLoggedIn)
 			navigate('/')
 		}
-	}, [isLoggedIn])
+	})
 	return (
 		<div className="about">
 			<TitlePage title="About Us" icon="😋" />

@@ -11,7 +11,7 @@ function ProductItem({ product }) {
 	return (
 		<div className={cx('product-item')}>
 			<span className={cx('onsale')}>Sale!</span>
-			<Link to={`product/${product.slug}`} className={cx('transition')}>
+			<Link to={`/product/${product.slug}`} className={cx('transition')}>
 				<button className={cx('wishlist')}>
 					<FontAwesomeIcon icon={faHeart} />
 				</button>
@@ -20,7 +20,7 @@ function ProductItem({ product }) {
 				</div>
 			</Link>
 			<div className={cx('caption')}>
-				<Link to={`product/12`} className={cx('title')}>
+				<Link to={`/product/${product.slug}`} className={cx('title')}>
 					<h3>{product.name}</h3>
 				</Link>
 				<div className={cx('description')}> {product.description}</div>

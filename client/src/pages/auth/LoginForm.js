@@ -61,7 +61,7 @@ function LoginForm() {
 			}
 		}
 		checkUser()
-	}, [])
+	})
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()

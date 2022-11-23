@@ -3,10 +3,10 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import classNames from 'classnames/bind'
 import style from './home.module.scss'
-import ProductItem from '@/components/productItem/ProductItem'
 import { Button } from '@/components'
 import { homeSliderData } from './data'
 import { Slide, PrevArrow, NextArrow } from '@/components/slider'
+import { ProductList, ProductItem } from '@/components'
 import { useEffect, useState } from 'react'
 import { getProducts } from '@/services/productServices'
 const cx = classNames.bind(style)
@@ -18,7 +18,7 @@ const tabs = [
 	},
 	{
 		type: 'burger',
-		title: 'burger',
+		title: 'Burger',
 	},
 	{
 		type: 'pasta',
@@ -77,11 +77,9 @@ function Home() {
 							</Button>
 						))}
 					</div>
-					<div className={cx('product-list')}>
-						{productList.map((product) => (
-							<ProductItem key={product._id} product={product} />
-						))}
-					</div>
+					<ProductList>
+						{productList && productList.map((product) => <ProductItem key={product._id} product={product} />)}
+					</ProductList>
 					{/* <div className={cx('view-all')}>
 						<Button primary large>
 							Xem tất cả
