@@ -1,6 +1,6 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const User = require("../models/UserModel");
 class AuthController {
   async checkAuth(req, res) {
     try {
@@ -68,22 +68,18 @@ class AuthController {
       //check for existing user
       const user = await User.findOne({ username });
       if (!user) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "Tên đăng nhập hoặc mật khẩu sai!",
-          });
+        return res.status(400).json({
+          success: false,
+          message: "Tên đăng nhập hoặc mật khẩu sai!",
+        });
       }
       //username found
       const passwordValid = await argon2.verify(user.password, password);
       if (!passwordValid) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "Tên đăng nhập hoặc mật khẩu sai!",
-          });
+        return res.status(400).json({
+          success: false,
+          message: "Tên đăng nhập hoặc mật khẩu sai!",
+        });
       }
       //all good
       //return token
