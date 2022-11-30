@@ -1,62 +1,49 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
+const asyncWrapper = require("../../middleware/async");
+const { createCustomError } = require("../../error/custom-error");
+
 class AuthController {
-  async checkAuth(req, res) {
-    try {
-      const user = await User.findById(req.userId).select("-password");
-      if (!user)
-        return res
-          .status(400)
-          .json({ success: false, message: "user not found" });
-      res.json({ success: true, user });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ success: false, message: "Máy chủ lỗi!" });
-    }
-  }
+  //route GET auth/checkAuth
+  checkAuth = asyncWrapper(async (req, res, next) => {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) return next(createCustomError("user not found", 400));
+    res.json({ success: true, user });
+  });
 
   //route POST auth/register
-  async register(req, res) {
+  register = asyncWrapper(async (req, res, next) => {
     const { username, password } = req.body;
 
-    if (!username || !password) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Sai tài khoản hoặc mật khẩu" });
-    }
-    try {
-      //check for existing user
-      const user = await User.findOne({ username });
-      if (user)
-        return res.status(400).json({
-          success: false,
-          message: "Tài khoản đã tồn tại.",
-        });
+    if (!username || !password)
+      return next(createCustomError("user not found ", 400));
 
-      const hashPassword = await argon2.hash(password);
-      const newUser = new User({ username, password: hashPassword });
+    //check for existing user
+    const user = await User.findOne({ username });
+    if (user) return next(createCustomError("Tài khoản đã tồn tại", 400));
 
-      await newUser.save();
+    const hashPassword = await argon2.hash(password);
+    const newUser = new User({ username, password: hashPassword });
 
-      //return token
-      const accessToken = jwt.sign(
-        { userId: newUser._id },
-        process.env.ACCESS_TOKEN_SECRET
-      );
-      res.json({
-        success: true,
-        message: "Tạo tài khoản thành công",
-        accessToken,
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ success: false, message: "Máy chủ lỗi!" });
-    }
-  }
+    await newUser.save();
+
+    //return token
+    const accessToken = jwt.sign(
+      { userId: newUser._id },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    if (!accessToken) return next(createCustomError("Máy chủ lỗi!", 500));
+
+    res.json({
+      success: true,
+      message: "Tạo tài khoản thành công",
+      accessToken,
+    });
+  });
 
   //router auth/login
-  async login(req, res) {
+  login = asyncWrapper(async (req, res, next) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -64,39 +51,36 @@ class AuthController {
         .status(400)
         .json({ success: false, message: "Thiếu mật khẩu hoặc tài khoản!" });
     }
-    try {
-      //check for existing user
-      const user = await User.findOne({ username });
-      if (!user) {
-        return res.status(400).json({
-          success: false,
-          message: "Tên đăng nhập hoặc mật khẩu sai!",
-        });
-      }
-      //username found
-      const passwordValid = await argon2.verify(user.password, password);
-      if (!passwordValid) {
-        return res.status(400).json({
-          success: false,
-          message: "Tên đăng nhập hoặc mật khẩu sai!",
-        });
-      }
-      //all good
-      //return token
-      const accessToken = jwt.sign(
-        { userId: user._id, username: user.username },
-        process.env.ACCESS_TOKEN_SECRET
-      );
-      res.json({
-        success: true,
-        message: "user login successfully",
-        accessToken,
+    //check for existing user
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Tên đăng nhập hoặc mật khẩu sai!",
       });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ success: false, message: "Máy chủ lỗi!" });
     }
-  }
+    //username found
+    const passwordValid = await argon2.verify(user.password, password);
+    if (!passwordValid) {
+      return res.status(400).json({
+        success: false,
+        message: "Tên đăng nhập hoặc mật khẩu sai!",
+      });
+    }
+    //all good
+    //return token
+    const accessToken = jwt.sign(
+      { userId: user._id, username: user.username },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    if (!accessToken) return next(createCustomError("Máy chủ lỗi!", 500));
+
+    res.json({
+      success: true,
+      message: "user login successfully",
+      accessToken,
+    });
+  });
 }
 
 module.exports = new AuthController();

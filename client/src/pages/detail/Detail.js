@@ -124,7 +124,7 @@ function Detail() {
 							{productList &&
 								productList.map((product) => {
 									if (product.slug === slug) {
-										return
+										return null
 									} else return <ProductItem key={product._id} product={product} />
 								})}
 						</ProductList>

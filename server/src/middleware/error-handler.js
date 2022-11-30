@@ -1,12 +1,20 @@
-const { CustomAPIError } = require("../errors/custom-error");
+const { CustomAPIError } = require("../error/custom-error");
 
-const errorHandlerMiddleware = (err, req, res, next) => {
+const notFound = (req, res, next) => {
+  const error = new Error(`Not found - ${req.originalUrl}`);
+  res.status(404);
+  next(error);
+};
+
+const errorHandler = (err, req, res, next) => {
   if (err instanceof CustomAPIError) {
-    return res.status(err.statusCode).json({ msg: err.message });
+    return res
+      .status(err.statusCode)
+      .json({ success: false, msg: err.message });
   }
   return res
     .status(500)
-    .json({ msg: "Something went wrong, please try again" });
+    .json({ success: false, msg: "Something went wrong, please try again" });
 };
 
-module.exports = errorHandlerMiddleware;
+module.exports = { notFound, errorHandler };
