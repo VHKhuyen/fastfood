@@ -1,29 +1,38 @@
-import images from '@/assets/images'
+import { useDispatch } from 'react-redux'
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import className from 'classnames/bind'
 import styles from './productcart.module.scss'
+import { removeItem } from '@/redux/cartSlice'
 const cx = className.bind(styles)
-function ProductCart() {
+function ProductCart({ item }) {
+	const { product, qty } = item
+	const dispatch = useDispatch()
+
+	const handleDelete = () => {
+		console.log(item.product)
+		dispatch(removeItem(item.product))
+	}
+
 	return (
 		<div className={cx('wrapper')}>
-			<button>
+			<button onClick={handleDelete}>
 				<FontAwesomeIcon icon={faTrashCan} />
 			</button>
 			<div className={cx('field-img')}>
-				<a href="/">
-					<img src={images.combo149} alt="burger" />
+				<a href={'/'}>
+					<img src={product.image} alt="burger" />
 				</a>
 			</div>
 			<div className={cx('info')}>
 				<div className={cx('field-name')}>
-					<a href="/">Combo Pokémon 2</a>
+					<a href="/">{product.name}</a>
 				</div>
 				<div className={cx('price')}>
-					<span>169</span>
-					<span>.</span>
-					<span>000</span>
-					<span>₫</span> x 1
+					<span>{product.price}</span>
+					{/* <span>.</span>
+					<span>000</span> */}
+					<span>₫</span> x {qty}
 				</div>
 			</div>
 		</div>

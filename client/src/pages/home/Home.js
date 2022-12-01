@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -7,8 +9,9 @@ import { Button } from '@/components'
 import { homeSliderData } from './data'
 import { Slide, PrevArrow, NextArrow } from '@/components/slider'
 import { ProductList, ProductItem } from '@/components'
-import { useEffect, useState } from 'react'
-import { getProducts } from '@/services/productServices'
+import { fetchProducts } from '@/redux/productsSlice'
+import { productsSelector } from '@/redux/selector'
+
 const cx = classNames.bind(style)
 
 const tabs = [
@@ -31,8 +34,11 @@ const tabs = [
 ]
 
 function Home() {
-	const [productList, setProductList] = useState([])
+	const dispatch = useDispatch()
+	const productState = useSelector(productsSelector)
+	const { products, loading } = productState
 	const [typeTab, setTypeTab] = useState('new')
+
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -44,16 +50,10 @@ function Home() {
 		nextArrow: <NextArrow />,
 		prevArrow: <PrevArrow />,
 	}
+
 	useEffect(() => {
-		const products = async () => {
-			const response = await getProducts(typeTab)
-			if (response?.success) {
-				setProductList(response.products)
-			} else {
-			}
-		}
-		products()
-	}, [typeTab])
+		dispatch(fetchProducts(typeTab))
+	}, [typeTab, dispatch])
 
 	return (
 		<div className={cx('wrapper')}>
@@ -78,13 +78,19 @@ function Home() {
 						))}
 					</div>
 					<ProductList>
-						{productList && productList.map((product) => <ProductItem key={product._id} product={product} />)}
-					</ProductList>
-					{/* <div className={cx('view-all')}>
+						{loading ? (
+							<p>Loading...</p>
+						) : (
+							<>
+								{products && products.map((product) => <ProductItem key={product._id} product={product} />)}
+								{/* <div className={cx('view-all')}>
 						<Button primary large>
 							Xem tất cả
 						</Button>
 					</div> */}
+							</>
+						)}
+					</ProductList>
 				</div>
 			</section>
 		</div>

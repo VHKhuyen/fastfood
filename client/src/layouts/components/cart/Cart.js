@@ -1,20 +1,26 @@
 import { useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import HeadlessTippy from '@tippyjs/react/headless'
-import { Wrapper as PopperWrapper } from '@/components/popper'
-import ProductCart from '@/components/productCart/ProductCart'
-import classNames from 'classnames/bind'
 import 'tippy.js/dist/tippy.css'
+
+import classNames from 'classnames/bind'
 import style from './cart.module.scss'
+
+import ProductCart from '@/components/productCart/ProductCart'
+import { Wrapper as PopperWrapper } from '@/components/popper'
 import { Button } from '@/components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { cartSelector } from '@/redux/selector'
+
 const cx = classNames.bind(style)
 
 function Cart() {
 	const [visible, setVisible] = useState(false)
-
+	const cartState = useSelector(cartSelector)
+	const { cartItems } = cartState
+	// const dispatch = useDispatch()
 	const refCart = useRef(null)
-
 	const hide = () => setVisible(false)
 	const handleVisible = (e) => {
 		e.preventDefault()
@@ -24,7 +30,7 @@ function Cart() {
 		<div ref={refCart} className={cx('cart')}>
 			<HeadlessTippy
 				arrow={true}
-				visible={visible}
+				visible={visible && cartItems.length > 0}
 				offset={[16, 16]}
 				placement="bottom-end"
 				interactive
@@ -33,15 +39,11 @@ function Cart() {
 						<PopperWrapper className={cx('content-cart')}>
 							<div className={cx('minicart')}>
 								<ul>
-									<li>
-										<ProductCart />
-									</li>
-									<li>
-										<ProductCart />
-									</li>
-									<li>
-										<ProductCart />
-									</li>
+									{cartItems.map((item) => (
+										<li key={item.product.slug}>
+											<ProductCart item={item} />
+										</li>
+									))}
 								</ul>
 							</div>
 							<div className={cx('total')}>
@@ -58,7 +60,7 @@ function Cart() {
 			>
 				<a href="/" onClick={handleVisible}>
 					<FontAwesomeIcon icon={faCartShopping} />
-					<span className={cx('count')}>0</span>
+					<span className={cx('count')}>{cartItems.length}</span>
 				</a>
 			</HeadlessTippy>
 		</div>

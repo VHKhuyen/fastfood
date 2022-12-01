@@ -11,6 +11,7 @@ import FormInput from '@/components/formInput'
 import config from '@/config'
 import images from '@/assets/images'
 import { loadUserSuccess, loginSuccess, loadUserFailed } from '@/redux/authSlice'
+import { authSelector } from '@/redux//selector'
 import { loadUser, loginUser } from '@/services/authServices'
 
 const cx = classNames.bind(style)
@@ -21,10 +22,11 @@ function LoginForm() {
 		username: '',
 		password: '',
 	})
+
 	const [loadSubmit, setLoadSubmit] = useState(false)
 	const [message, setMessage] = useState({ error: false, message: '' })
 
-	const auth = useSelector((state) => state.auth)
+	const auth = useSelector(authSelector)
 	const dispatch = useDispatch()
 
 	const inputs = [

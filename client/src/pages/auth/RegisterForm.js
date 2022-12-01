@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate } from 'react-router-dom'
 import style from './auth.module.scss'
 import classNames from 'classnames/bind'
-import FormInput from '@/components/formInput'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+
+import FormInput from '@/components/formInput'
 import { Button } from '@/components'
 import { registerUser } from '@/services/authServices'
 import { registerSuccess } from '@/redux/authSlice'
+import { authSelector } from '@/redux/selector'
 
 import config from '@/config'
 import images from '@/assets/images'
@@ -18,7 +20,7 @@ const cx = classNames.bind(style)
 function RegisterForm() {
 	let body
 
-	const auth = useSelector((state) => state.auth)
+	const auth = useSelector(authSelector)
 	const dispatch = useDispatch()
 	const { isAuthenticated, authLoading } = auth
 

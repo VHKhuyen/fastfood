@@ -4,10 +4,16 @@ import styles from './productItem.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons'
 import Button from '../button/Button'
+import { useDispatch } from 'react-redux'
+import { addItem } from '@/redux/cartSlice'
 
 const cx = classNames.bind(styles)
 
 function ProductItem({ product }) {
+	const dispatch = useDispatch()
+	const handleAddItem = () => {
+		dispatch(addItem({ product: product, qty: 1 }))
+	}
 	return (
 		<div className={cx('product-item')}>
 			<span className={cx('onsale')}>Sale!</span>
@@ -29,7 +35,7 @@ function ProductItem({ product }) {
 						<span className={cx('previous')}>₫80.000</span>
 						<span className={cx('current')}>{product.price}</span>
 					</span>
-					<Button className={cx('cart')} primary>
+					<Button onClick={handleAddItem} className={cx('cart')} primary>
 						<FontAwesomeIcon icon={faCartShopping} />
 					</Button>
 				</div>

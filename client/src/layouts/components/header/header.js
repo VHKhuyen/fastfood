@@ -12,10 +12,11 @@ import Image from '@/components/image'
 import { Search, Cart, Menu } from '../index'
 import config from '@/config'
 import routes from '@/config/routes'
+import { authSelector } from '@/redux/selector'
 const cx = classNames.bind(style)
 
 function Header() {
-	const auth = useSelector((state) => state.auth)
+	const auth = useSelector(authSelector)
 	const { isAuthenticated } = auth
 	const handleWishlist = (e) => {
 		e.preventDefault()
