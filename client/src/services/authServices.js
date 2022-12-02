@@ -51,8 +51,5 @@ const loginUser = async (userForm) => {
 		} else return { success: false, message: error.message }
 	}
 }
-const logoutUser = () => {
-	localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-}
 
-export { loadUser, registerUser, loginUser, logoutUser }
+export { loadUser, registerUser, loginUser }

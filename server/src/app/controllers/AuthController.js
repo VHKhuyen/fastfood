@@ -14,17 +14,22 @@ class AuthController {
 
   //route POST auth/register
   register = asyncWrapper(async (req, res, next) => {
-    const { username, password } = req.body;
-
-    if (!username || !password)
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
       return next(createCustomError("user not found ", 400));
+    }
 
     //check for existing user
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (user) return next(createCustomError("Tài khoản đã tồn tại", 400));
 
     const hashPassword = await argon2.hash(password);
-    const newUser = new User({ username, password: hashPassword });
+
+    const newUser = new User({
+      username,
+      email,
+      password: hashPassword,
+    });
 
     await newUser.save();
 

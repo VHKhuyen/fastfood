@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames/bind'
@@ -10,9 +10,8 @@ import { Button } from '@/components'
 import FormInput from '@/components/formInput'
 import config from '@/config'
 import images from '@/assets/images'
-import { loadUserSuccess, loginSuccess, loadUserFailed } from '@/redux/authSlice'
 import { authSelector } from '@/redux//selector'
-import { loadUser, loginUser } from '@/services/authServices'
+import { fetchLogin } from '@/redux/authSlice'
 
 const cx = classNames.bind(style)
 
@@ -23,11 +22,11 @@ function LoginForm() {
 		password: '',
 	})
 
-	const [loadSubmit, setLoadSubmit] = useState(false)
-	const [message, setMessage] = useState({ error: false, message: '' })
+	// const [message, setMessage] = useState({ error: false, message: '' })
 
-	const auth = useSelector(authSelector)
 	const dispatch = useDispatch()
+	const auth = useSelector(authSelector)
+	const { authLoading, isAuthenticated } = auth
 
 	const inputs = [
 		{
@@ -53,37 +52,17 @@ function LoginForm() {
 		setValueForm({ ...valueForm, [e.target.name]: e.target.value })
 	}
 
-	useEffect(() => {
-		const checkUser = async () => {
-			const response = await loadUser()
-			if (response?.success) {
-				dispatch(loadUserSuccess())
-			} else {
-				dispatch(loadUserFailed())
-			}
-		}
-		checkUser()
-	})
-
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		setLoadSubmit(true)
-		const response = await loginUser(valueForm)
-		if (response.success) {
-			dispatch(loginSuccess())
-		} else {
-			if (response.message === 'Network Error') {
-				setMessage({ error: true, message: 'Không thể kết nối tới máy chủ!' })
-			} else {
-				setMessage({ error: true, message: response.message })
-			}
-		}
-		setLoadSubmit(false)
+		dispatch(fetchLogin(valueForm))
+		// if (response.message === 'Network Error') {
+		// 	setMessage({ error: true, message: 'Không thể kết nối tới máy chủ!' })
+		// } else {
+		// 	setMessage({ error: true, message: response.message })
+		// }
 	}
 
-	if (auth.authLoading) {
-		body = <h1>Loading...</h1>
-	} else if (auth.isAuthenticated) {
+	if (isAuthenticated) {
 		body = <Navigate to={config.routes.home} />
 	} else {
 		body = (
@@ -95,11 +74,16 @@ function LoginForm() {
 				</div>
 				<form onSubmit={handleSubmit}>
 					<h1>Đăng nhập</h1>
-					{!!message.error && <h4>{message.message}</h4>}
+					{/* {!!message.error && <h4>{message.message}</h4>} */}
 					{inputs.map((input) => (
-						<FormInput key={input.id} {...input} value={valueForm[input.name]} onChange={handleOnChange} />
+						<FormInput
+							key={input.id}
+							{...input}
+							value={valueForm[input.name]}
+							onChange={handleOnChange}
+						/>
 					))}
-					{loadSubmit ? (
+					{authLoading ? (
 						<Button primary width100 radius disable className={cx('btn-disable')}>
 							<FontAwesomeIcon icon={faSpinner} />
 						</Button>

@@ -2,22 +2,16 @@ import { Fragment, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { publicRoutes } from '@/routes'
 import { DefaultLayout } from '@/layouts'
-import { loadUser } from '@/services/authServices'
-import { loadUserSuccess } from '@/redux/authSlice'
+import { fetchLoadUser } from '@/redux/authSlice'
 import { useDispatch } from 'react-redux'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {
 	const dispatch = useDispatch()
 	useEffect(() => {
-		const checkUser = async () => {
-			const data = await loadUser()
-			if (data?.success) {
-				dispatch(loadUserSuccess())
-			}
-		}
-		checkUser()
+		dispatch(fetchLoadUser())
 	}, [dispatch])
+
 	return (
 		<Router>
 			<div className="app">

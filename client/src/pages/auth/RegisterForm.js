@@ -8,10 +8,8 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import FormInput from '@/components/formInput'
 import { Button } from '@/components'
-import { registerUser } from '@/services/authServices'
-import { registerSuccess } from '@/redux/authSlice'
 import { authSelector } from '@/redux/selector'
-
+import { fetchRegister } from '@/redux/authSlice'
 import config from '@/config'
 import images from '@/assets/images'
 
@@ -20,15 +18,14 @@ const cx = classNames.bind(style)
 function RegisterForm() {
 	let body
 
-	const auth = useSelector(authSelector)
 	const dispatch = useDispatch()
-	const { isAuthenticated, authLoading } = auth
-
-	const [loadSubmit, setLoadSubmit] = useState(false)
-	const [message, setMessage] = useState({ error: false, message: '' })
+	const auth = useSelector(authSelector)
+	const { authLoading, isAuthenticated } = auth
+	// const [message, setMessage] = useState({ error: false, message: '' })
 
 	const [valueForm, setValueForm] = useState({
 		username: '',
+		email: '',
 		password: '',
 	})
 
@@ -43,6 +40,14 @@ function RegisterForm() {
 		},
 		{
 			id: 2,
+			name: 'email',
+			type: 'text',
+			placeholder: 'Email',
+			error: 'Chưa có email!',
+			required: true,
+		},
+		{
+			id: 3,
 			name: 'password',
 			type: 'password',
 			placeholder: 'Mật khẩu',
@@ -51,7 +56,7 @@ function RegisterForm() {
 			pattern: '[0-9a-zA-Z]{6,}',
 		},
 		{
-			id: 3,
+			id: 4,
 			name: 'confirmPassword',
 			type: 'password',
 			placeholder: 'Xác nhận mật khẩu',
@@ -62,26 +67,18 @@ function RegisterForm() {
 	]
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		setLoadSubmit(true)
-		const response = await registerUser(valueForm)
-		setLoadSubmit(false)
-		if (response?.success) {
-			dispatch(registerSuccess())
-		} else {
-			if (response.message === 'Network Error') {
-				setMessage({ error: true, message: 'Không thể kết nối tới máy chủ!' })
-			} else {
-				setMessage({ error: true, message: response.message })
-			}
-		}
+		dispatch(fetchRegister(valueForm))
+		// if (response.message === 'Network Error') {
+		// 	setMessage({ error: true, message: 'Không thể kết nối tới máy chủ!' })
+		// } else {
+		// 	setMessage({ error: true, message: response.message })
+		// }
 	}
 
 	const handleOnChange = (e) => {
 		setValueForm({ ...valueForm, [e.target.name]: e.target.value })
 	}
-	if (authLoading) {
-		body = <h1>Loading...</h1>
-	} else if (isAuthenticated) {
+	if (isAuthenticated) {
 		body = <Navigate to={config.routes.home} />
 	} else {
 		body = (
@@ -93,12 +90,17 @@ function RegisterForm() {
 				</div>
 				<form onSubmit={handleSubmit}>
 					<h1>Đăng ký</h1>
-					{message.error && <h4>{message.message}</h4>}
+					{/* {message.error && <h4>{message.message}</h4>} */}
 
 					{inputs.map((input) => (
-						<FormInput key={input.id} {...input} value={valueForm[input.name]} onChange={handleOnChange} />
+						<FormInput
+							key={input.id}
+							{...input}
+							value={valueForm[input.name]}
+							onChange={handleOnChange}
+						/>
 					))}
-					{loadSubmit ? (
+					{authLoading ? (
 						<Button primary width100 radius disable className={cx('btn-disable')}>
 							<FontAwesomeIcon icon={faSpinner} />
 						</Button>

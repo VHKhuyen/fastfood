@@ -19,6 +19,8 @@ function Cart() {
 	const [visible, setVisible] = useState(false)
 	const cartState = useSelector(cartSelector)
 	const { cartItems } = cartState
+
+	const total = cartItems.reduce((prev, curr) => prev + curr.product.price * curr.qty, 0)
 	// const dispatch = useDispatch()
 	const refCart = useRef(null)
 	const hide = () => setVisible(false)
@@ -48,7 +50,7 @@ function Cart() {
 							</div>
 							<div className={cx('total')}>
 								<p>Tổng cộng</p>
-								<span>676.000 ₫</span>
+								<span>{total} ₫</span>
 							</div>
 							<Button width100 large primary noRadius>
 								Thanh toán

@@ -3,7 +3,6 @@ import Tippy from '@tippyjs/react/headless'
 import classNames from 'classnames/bind'
 import style from './menuPopper.module.scss'
 import { Wrapper as PopperWrapper } from '@/components/popper'
-import { logoutUser } from '@/services/authServices'
 import { useDispatch } from 'react-redux'
 import { logout } from '@/redux/authSlice'
 const cx = classNames.bind(style)
@@ -15,7 +14,6 @@ function MenuPopper({ children, hideOnClick = false }) {
 
 	const handleLogout = (e) => {
 		e.preventDefault()
-		logoutUser()
 		dispatch(logout())
 	}
 	return (

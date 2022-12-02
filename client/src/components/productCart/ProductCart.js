@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import className from 'classnames/bind'
 import styles from './productcart.module.scss'
 import { removeItem } from '@/redux/cartSlice'
+import { Link } from 'react-router-dom'
 const cx = className.bind(styles)
 function ProductCart({ item }) {
 	const { product, qty } = item
 	const dispatch = useDispatch()
 
 	const handleDelete = () => {
-		console.log(item.product)
 		dispatch(removeItem(item.product))
 	}
 
@@ -20,13 +20,13 @@ function ProductCart({ item }) {
 				<FontAwesomeIcon icon={faTrashCan} />
 			</button>
 			<div className={cx('field-img')}>
-				<a href={'/'}>
+				<Link to={`/product/${product.slug}`}>
 					<img src={product.image} alt="burger" />
-				</a>
+				</Link>
 			</div>
 			<div className={cx('info')}>
 				<div className={cx('field-name')}>
-					<a href="/">{product.name}</a>
+					<Link to={`/product/${product.slug}`}>{product.name}</Link>
 				</div>
 				<div className={cx('price')}>
 					<span>{product.price}</span>
