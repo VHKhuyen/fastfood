@@ -8,13 +8,16 @@ class AuthController {
   //route GET auth/checkAuth
   checkAuth = asyncWrapper(async (req, res, next) => {
     const user = await User.findById(req.userId).select("-password");
+
     if (!user) return next(createCustomError("user not found", 400));
-    res.json({ success: true, user });
+
+    res.json({ success: true, message: "user login successfully" });
   });
 
   //route POST auth/register
   register = asyncWrapper(async (req, res, next) => {
     const { username, email, password } = req.body;
+
     if (!username || !email || !password) {
       return next(createCustomError("user not found ", 400));
     }
@@ -49,20 +52,50 @@ class AuthController {
 
   //router auth/login
   login = asyncWrapper(async (req, res, next) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Thiếu mật khẩu hoặc tài khoản!" });
+    if (!email || !password) {
+      return next(createCustomError("user not found ", 400));
+    }
+
+    //check for existing user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return next(createCustomError("Email hoặc mật khẩu sai!", 400));
+    }
+
+    //username found
+    const passwordValid = await argon2.verify(user.password, password);
+    if (!passwordValid) {
+      return next(createCustomError("Tên đăng nhập hoặc mật khẩu sai!", 400));
+    }
+
+    //all good
+    //return token
+    const accessToken = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    if (!accessToken) return next(createCustomError("Máy chủ lỗi!", 500));
+
+    res.json({
+      success: true,
+      message: "user login successfully",
+      accessToken,
+    });
+  });
+
+  //router auth/profile
+  profile = asyncWrapper(async (req, res, next) => {
+    const { username, email, password } = req.body;
+
+    if (!username || !email || !password) {
+      return next(createCustomError("user not found ", 400));
     }
     //check for existing user
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "Tên đăng nhập hoặc mật khẩu sai!",
-      });
+      return next(createCustomError("Email hoặc mật khẩu sai!", 400));
     }
     //username found
     const passwordValid = await argon2.verify(user.password, password);
@@ -87,5 +120,4 @@ class AuthController {
     });
   });
 }
-
 module.exports = new AuthController();

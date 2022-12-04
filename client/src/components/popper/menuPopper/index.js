@@ -9,7 +9,7 @@ const cx = classNames.bind(style)
 MenuPopper.propTypes = {
 	children: PropTypes.node.isRequired,
 }
-function MenuPopper({ children, hideOnClick = false }) {
+function MenuPopper({ children }) {
 	const dispatch = useDispatch()
 
 	const handleLogout = (e) => {
@@ -20,7 +20,6 @@ function MenuPopper({ children, hideOnClick = false }) {
 		<Tippy
 			interactive
 			trigger="click"
-			hideOnClick={hideOnClick}
 			placement="bottom-end"
 			render={(attrs) => (
 				<div className={cx('menu-list')} tabIndex="-1" {...attrs}>

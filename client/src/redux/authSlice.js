@@ -6,7 +6,7 @@ const statusAuthFromLocalStorage = localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME
 const initialState = {
 	authLoading: false,
 	isAuthenticated: statusAuthFromLocalStorage,
-	user: null,
+	msg: '',
 }
 
 const authSlice = createSlice({
@@ -25,9 +25,13 @@ const authSlice = createSlice({
 				state.authLoading = true
 			})
 			.addCase(fetchRegister.fulfilled, (state, action) => {
+				if (action.payload.success) {
+					state.isAuthenticated = true
+				} else {
+					state.isAuthenticated = false
+					state.msg = action.payload.msg
+				}
 				state.authLoading = false
-				state.isAuthenticated = true
-				state.user = action.payload
 			})
 			.addCase(fetchRegister.rejected, (state, action) => {
 				state.authLoading = false
@@ -38,9 +42,12 @@ const authSlice = createSlice({
 				state.authLoading = true
 			})
 			.addCase(fetchLoadUser.fulfilled, (state, action) => {
+				if (action.payload.success) {
+					state.isAuthenticated = true
+				} else {
+					state.isAuthenticated = false
+				}
 				state.authLoading = false
-				state.isAuthenticated = true
-				state.user = action.payload
 			})
 			.addCase(fetchLoadUser.rejected, (state, action) => {
 				state.authLoading = false
@@ -51,9 +58,13 @@ const authSlice = createSlice({
 				state.authLoading = true
 			})
 			.addCase(fetchLogin.fulfilled, (state, action) => {
+				if (action.payload.success) {
+					state.isAuthenticated = true
+				} else {
+					state.isAuthenticated = false
+					state.msg = action.payload.msg
+				}
 				state.authLoading = false
-				state.isAuthenticated = true
-				state.user = action.payload
 			})
 			.addCase(fetchLogin.rejected, (state, action) => {
 				state.authLoading = false
@@ -64,6 +75,7 @@ export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (value
 	const response = await registerUser(valueForm)
 	return response
 })
+
 export const fetchLoadUser = createAsyncThunk('auth/fetchLoadUser', async () => {
 	const response = await loadUser()
 	return response

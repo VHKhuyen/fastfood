@@ -22,19 +22,17 @@ function LoginForm() {
 		password: '',
 	})
 
-	// const [message, setMessage] = useState({ error: false, message: '' })
-
 	const dispatch = useDispatch()
 	const auth = useSelector(authSelector)
-	const { authLoading, isAuthenticated } = auth
+	const { authLoading, isAuthenticated, msg } = auth
 
 	const inputs = [
 		{
 			id: 1,
-			name: 'username',
+			name: 'email',
 			type: 'text',
-			placeholder: 'Tên đăng nhập',
-			error: 'Chưa có tên đăng nhập!',
+			placeholder: 'Email',
+			error: 'Chưa có tên email!',
 			required: true,
 		},
 		{
@@ -55,11 +53,6 @@ function LoginForm() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		dispatch(fetchLogin(valueForm))
-		// if (response.message === 'Network Error') {
-		// 	setMessage({ error: true, message: 'Không thể kết nối tới máy chủ!' })
-		// } else {
-		// 	setMessage({ error: true, message: response.message })
-		// }
 	}
 
 	if (isAuthenticated) {
@@ -74,7 +67,7 @@ function LoginForm() {
 				</div>
 				<form onSubmit={handleSubmit}>
 					<h1>Đăng nhập</h1>
-					{/* {!!message.error && <h4>{message.message}</h4>} */}
+					{!!msg && <h4>{msg}</h4>}
 					{inputs.map((input) => (
 						<FormInput
 							key={input.id}

@@ -5,7 +5,7 @@ import classNames from 'classnames/bind'
 
 const cx = classNames.bind(style)
 
-function FormInput({ onChange, error, ...props }) {
+function FormInput({ onChange, value, error, ...props }) {
 	const [focused, setFocused] = useState(false)
 	const handleBlur = () => {
 		setFocused(true)
@@ -21,6 +21,7 @@ function FormInput({ onChange, error, ...props }) {
 		<div className={cx('form-input')}>
 			<input
 				{...props}
+				value={value || ''}
 				onChange={onChange}
 				onBlur={handleBlur}
 				onFocus={() => handleFocus(props)}

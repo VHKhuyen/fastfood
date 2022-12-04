@@ -16,6 +16,8 @@ const loadUser = async () => {
 			setAuthToKen(null)
 			return error.response.data
 		}
+	} else {
+		return { success: false }
 	}
 }
 

@@ -8,9 +8,10 @@ import ScrollToTop from './components/ScrollToTop'
 
 function App() {
 	const dispatch = useDispatch()
+
 	useEffect(() => {
 		dispatch(fetchLoadUser())
-	}, [dispatch])
+	})
 
 	return (
 		<Router>
