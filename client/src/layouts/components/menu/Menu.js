@@ -7,27 +7,23 @@ const cx = classNames.bind(style)
 
 const menus = [
 	{
-		title: 'Home',
-		to: config.routes.home,
+		title: 'Khuyến mãi',
+		to: config.routes.discount,
 	},
 	{
-		title: 'Menu',
+		title: 'Thực đơn',
 		to: config.routes.menu,
 	},
 	{
-		title: 'About',
-		to: config.routes.about,
-	},
-	{
-		title: 'Shop',
+		title: 'Cửa hàng',
 		to: config.routes.shop,
 	},
 	{
-		title: 'Blog',
+		title: 'Tin tức',
 		to: config.routes.blog,
 	},
 	{
-		title: 'Contact',
+		title: 'Liên hệ',
 		to: config.routes.contact,
 	},
 ]

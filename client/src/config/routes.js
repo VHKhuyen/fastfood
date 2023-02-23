@@ -5,7 +5,7 @@ const routes = {
 	shop: '/shop',
 	blog: '/blog',
 	contact: '/contact',
-	wishlist: '/wishlist',
+	discount: '/discount',
 	cart: '/cart',
 	user: '/user',
 	upload: '/upload',

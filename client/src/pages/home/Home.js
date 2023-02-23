@@ -6,6 +6,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import classNames from 'classnames/bind'
 import style from './home.module.scss'
 import { Button } from '@/components'
+import config from '@/config'
 import { homeSliderData } from './data'
 import { Slide, PrevArrow, NextArrow } from '@/components/slider'
 import { ProductList, ProductItem } from '@/components'
@@ -64,7 +65,7 @@ function Home() {
 			</Slider>
 			<section>
 				<div className={cx('popular-dishes')}>
-					<h2>Danh mục phổ biến</h2>
+					<h2>Ưu đãi đặc biệt</h2>
 					<div className={cx('tabs-wrapper')}>
 						{tabs.map((tab) => (
 							<Button
@@ -82,15 +83,29 @@ function Home() {
 							<p>Loading...</p>
 						) : (
 							<>
-								{products && products.map((product) => <ProductItem key={product._id} product={product} />)}
-								{/* <div className={cx('view-all')}>
-						<Button primary large>
-							Xem tất cả
-						</Button>
-					</div> */}
+								{products &&
+									products
+										.slice(0, 4)
+										.map((product) => <ProductItem key={product._id} product={product} />)}
 							</>
 						)}
 					</ProductList>
+					<div className={cx('view-all')}>
+						<Button primary large>
+							Xem tất cả
+						</Button>
+					</div>
+				</div>
+			</section>
+			<section className={cx('banner')}>
+				<div className={cx('banner-content')}>
+					<h1>
+						<span>Chúng tôi đảm bảo</span>Chỉ 30 phút!
+					</h1>
+					<p>Dịch vụ giao hàng của Vuki!. Đặt hàng đơn giản, giao hàng nhanh chóng.</p>
+					<Button to={config.routes.menu} primary large>
+						ĐẶT HÀNG NGAY
+					</Button>
 				</div>
 			</section>
 		</div>
